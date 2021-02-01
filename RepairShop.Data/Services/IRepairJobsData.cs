@@ -14,5 +14,7 @@ namespace RepairShop.Data.Services
         void Add(RepairJob repairJob);
         void Update(RepairJob repairJob);
         void Delete(int id);
+        int AmountWithStatus(RepairStatus status);
+        Dictionary<RepairStatus, int> StatusAmounts();
     }
 }

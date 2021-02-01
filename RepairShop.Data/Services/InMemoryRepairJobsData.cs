@@ -28,7 +28,7 @@ namespace RepairShop.Data.Services
 
         public void Delete(int id)
         {
-            var existing = this.Get(id);
+            var existing = Get(id);
             if (existing != null)
             {
                 repairJobs.Remove(existing);
@@ -54,6 +54,22 @@ namespace RepairShop.Data.Services
                 existing.EndDate = repairJob.EndDate;
                 existing.Status = repairJob.Status;
             }
+        }
+
+        public int AmountWithStatus(RepairStatus status)
+        {
+            return repairJobs.Count(r => r.Status == status);
+        }
+
+        public Dictionary<RepairStatus, int> StatusAmounts()
+        {
+            var statusDict = new Dictionary<RepairStatus, int>();
+            foreach (RepairStatus status in Enum.GetValues(typeof(RepairStatus)))
+            {
+                statusDict[status] = AmountWithStatus(status);
+            }
+
+            return statusDict;
         }
     }
 }
