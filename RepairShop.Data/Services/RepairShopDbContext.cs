@@ -11,5 +11,8 @@ namespace RepairShop.Data.Services
     class RepairShopDbContext :DbContext
     {
         public DbSet<RepairJob> RepairJobs { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Part> Parts { get; set; }
     }
 }
