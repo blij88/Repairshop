@@ -15,7 +15,9 @@ namespace RepairShop.Data.Models
         [Required]
         public DateTime EndDate { get; set; }
         public RepairStatus Status { get; set; }
-        public int EmployeeId { get; set; }
+
+        // Dictionary with keys corresponding to EmployeeID and values corresponding to number of hours worked on this job by that employee.
+        public Dictionary<int, int> HoursWorkedByEmployee { get; set; }
 
         [Required]
         public int CustomerId { get; set; }

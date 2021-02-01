@@ -15,8 +15,8 @@ namespace RepairShop.Data.Services
         {
             repairJobs = new List<RepairJob>
             {
-                new RepairJob { Id = 1, StartDate = new DateTime(2021, 2, 12), EndDate = new DateTime(2021, 2, 22), Status = RepairStatus.Pending, CustomerId = 1, EmployeeId = 2},
-                new RepairJob { Id = 2, StartDate = new DateTime(2021, 3, 1), EndDate = new DateTime(2021, 3, 10), Status = RepairStatus.Pending, CustomerId = 2, EmployeeId = 1}
+                new RepairJob { Id = 1, StartDate = new DateTime(2021, 2, 12), EndDate = new DateTime(2021, 2, 22), Status = RepairStatus.Pending, CustomerId = 1},
+                new RepairJob { Id = 2, StartDate = new DateTime(2021, 3, 1), EndDate = new DateTime(2021, 3, 10), Status = RepairStatus.Pending, CustomerId = 2}
             };
         }
 
@@ -54,7 +54,7 @@ namespace RepairShop.Data.Services
                 existing.EndDate = repairJob.EndDate;
                 existing.Status = repairJob.Status;
                 existing.CustomerId = repairJob.CustomerId;
-                existing.EmployeeId = repairJob.EmployeeId;
+                existing.HoursWorkedByEmployee = repairJob.HoursWorkedByEmployee;
                 existing.Description = repairJob.Description;
                 existing.RequiredParts = repairJob.RequiredParts;
             }
