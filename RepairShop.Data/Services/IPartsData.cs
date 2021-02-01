@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RepairShop.Data.Services
 {
-    interface IPartsData
+    public interface IPartsData
     {
         IEnumerable<Part> GetAll();
         Part Get(int id);

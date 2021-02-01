@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RepairShop.Data.Models
 {
-    class Customer
+    public class Customer
     {
         public int Id { get; set; }
 

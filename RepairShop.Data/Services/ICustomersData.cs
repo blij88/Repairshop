@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RepairShop.Data.Services
 {
-    interface ICustomersData
+    public interface ICustomersData
     {
         IEnumerable<Customer> GetAll();
         Customer Get(int id);

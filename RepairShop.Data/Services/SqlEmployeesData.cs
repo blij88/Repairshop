@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RepairShop.Data.Services
 {
-    class SqlEmployeesData : IEmployeesData
+    public class SqlEmployeesData : IEmployeesData
     {
         private readonly RepairShopDbContext db;
 

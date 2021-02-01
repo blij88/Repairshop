@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RepairShop.Data.Services
 {
-    class InMemoryPartsData : IPartsData
+    public class InMemoryPartsData : IPartsData
     {
         List<Part> parts;
 
