@@ -66,6 +66,9 @@
     <Compile Include="Services\IPartsData.cs" />
     <Compile Include="Services\IRepairJobsData.cs" />
     <Compile Include="Services\RepairShopDbContext.cs" />
+    <Compile Include="Services\SqlCustomersData.cs" />
+    <Compile Include="Services\SqlEmployeesData.cs" />
+    <Compile Include="Services\SqlPartsData.cs" />
     <Compile Include="Services\SqlRepairJobsData.cs" />
   </ItemGroup>
   <ItemGroup>
