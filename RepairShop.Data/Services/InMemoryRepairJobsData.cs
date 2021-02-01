@@ -42,7 +42,7 @@ namespace RepairShop.Data.Services
 
         public IEnumerable<RepairJob> GetAll()
         {
-            return repairJobs;
+            return repairJobs.OrderBy(r => r.EndDate);
         }
 
         public void Update(RepairJob repairJob)
