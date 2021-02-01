@@ -1,4 +1,5 @@
-﻿using RepairShop.Data.Services;
+﻿
+using RepairShop.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace RepairShop.Controllers
         public ActionResult Index()
         {
             var Model = db.GetAll();
+            int statusAmount = db.AmountWithStatus(Data.Models.RepairStatus.Pending);
             return View(Model);
         }
 
