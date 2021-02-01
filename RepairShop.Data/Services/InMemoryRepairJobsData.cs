@@ -75,5 +75,10 @@ namespace RepairShop.Data.Services
 
             return statusDict;
         }
+
+        public decimal GetPrice(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

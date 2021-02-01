@@ -16,5 +16,6 @@ namespace RepairShop.Data.Services
         void Delete(int id);
         int AmountWithStatus(RepairStatus status);
         Dictionary<RepairStatus, int> StatusAmounts();
+        decimal GetPrice(int id);
     }
 }

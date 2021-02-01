@@ -62,5 +62,21 @@ namespace RepairShop.Data.Services
 
             return statusDict;
         }
+
+        public decimal GetPrice(int id)
+        {
+            var job = Get(id);
+            var employee = db.Employees.FirstOrDefault(e => e.Id == job.EmployeeId);
+            var wageCost = employee.HourlyCost;
+
+            decimal materialCost = 0M;
+            foreach (var kvp in job.RequiredParts)
+            {
+                var part = db.Parts.FirstOrDefault(p => p.Id == kvp.Key);
+                materialCost += part.UnitCost * kvp.Value;
+            }
+
+            return wageCost + materialCost;
+        }
     }
 }
