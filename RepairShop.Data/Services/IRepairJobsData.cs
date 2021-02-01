@@ -1,14 +1,20 @@
-﻿using System;
+﻿using RepairShop.Data.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class Class1
+namespace RepairShop.Data.Services
 {
-	public Class1()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public interface IRepairJobsData
+    {
+        IEnumerable<RepairJob> GetAll();
+        RepairJob Get(int id);
+        void Add(RepairJob repairJob);
+        void Update(RepairJob repairJob);
+        void Delete(int id);
+        int AmountWithStatus(RepairStatus status);
+        Dictionary<RepairStatus, int> StatusAmounts();
+    }
 }

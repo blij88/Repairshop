@@ -14,6 +14,5 @@ namespace RepairShop.Data.Models
         public DateTime EndDate { get; set; }
         public RepairStatus Status { get; set; }
 
-
     }
 }

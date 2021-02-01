@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RepairShop.Data.Models
+﻿namespace RepairShop.Data.Models
 {
     public enum RepairStatus
     {
