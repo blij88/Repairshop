@@ -88,8 +88,19 @@ namespace RepairShop.Data.Services
         {
             var entry = Get(id);
             var today = DateTime.Today;
-            return (entry.StartDate < today && entry.Status == RepairStatus.Pending) ||
-                (entry.EndDate < today && entry.Status != RepairStatus.Done);
+            return ElementIsLate(entry, today);
+        }
+
+        public IEnumerable<bool> IsLate()
+        {
+            var today = DateTime.Today;
+            return db.RepairJobs.Select(r => ElementIsLate(r, today));
+        }
+
+        bool ElementIsLate(RepairJob job, DateTime today)
+        {
+            return (job.StartDate < today && job.Status == RepairStatus.Pending) ||
+                (job.EndDate < today && job.Status != RepairStatus.Done);
         }
     }
 }

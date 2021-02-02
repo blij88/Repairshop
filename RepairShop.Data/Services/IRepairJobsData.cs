@@ -18,5 +18,6 @@ namespace RepairShop.Data.Services
         Dictionary<RepairStatus, int> StatusAmounts();
         decimal GetPrice(int id);
         bool IsLate(int id);
+        IEnumerable<bool> IsLate();
     }
 }
