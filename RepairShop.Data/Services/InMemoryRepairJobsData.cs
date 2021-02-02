@@ -84,24 +84,5 @@ namespace RepairShop.Data.Services
         {
             throw new NotImplementedException();
         }
-
-        public bool IsLate(int id)
-        {
-            var entry = Get(id);
-            var today = DateTime.Today;
-            return ElementIsLate(entry, today);
-        }
-
-        public IEnumerable<bool> IsLate()
-        {
-            var today = DateTime.Today;
-            return repairJobs.Select(r => ElementIsLate(r, today));
-        }
-
-        bool ElementIsLate(RepairJob job, DateTime today)
-        {
-            return (job.StartDate < today && job.Status == RepairStatus.Pending) ||
-                (job.EndDate < today && job.Status != RepairStatus.Done);
-        }
     }
 }

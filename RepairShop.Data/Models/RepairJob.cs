@@ -36,5 +36,15 @@ namespace RepairShop.Data.Models
         // Dictionary with keys corresponding to PartId and values corresponding to amount of that part.
         public Dictionary<int, int> RequiredParts { get; set; }
 
+        public bool IsLate
+        {
+            get
+            {
+                var today = DateTime.Today;
+                return (StartDate < today && Status == RepairStatus.Pending) ||
+                    (EndDate < today && Status != RepairStatus.Done);
+            }
+        }
+
     }
 }
