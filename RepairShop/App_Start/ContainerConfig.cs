@@ -11,10 +11,10 @@ namespace RepairShop.Web
         {
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterType<InMemoryRepairJobsData>().As<IRepairJobsData>().SingleInstance();
-            builder.RegisterType<InMemoryPartsData>().As<IPartsData>().InstancePerRequest();
-            builder.RegisterType<InMemoryCustomersData>().As<ICustomersData>().InstancePerRequest();
-            builder.RegisterType<InMemoryEmployeesData>().As<IEmployeesData>().InstancePerRequest();
+            builder.RegisterType<SqlRepairJobsData>().As<IRepairJobsData>().InstancePerRequest();
+            builder.RegisterType<SqlPartsData>().As<IPartsData>().InstancePerRequest();
+            builder.RegisterType<SqlCustomersData>().As<ICustomersData>().InstancePerRequest();
+            builder.RegisterType<SqlEmployeesData>().As<IEmployeesData>().InstancePerRequest();
             builder.RegisterType<RepairShopDbContext>().InstancePerRequest();
 
             var container = builder.Build();
