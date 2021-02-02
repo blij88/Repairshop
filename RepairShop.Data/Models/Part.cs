@@ -16,5 +16,7 @@ namespace RepairShop.Data.Models
 
         [Required]
         public decimal UnitCost { get; set; }
+        public int AmountInStore { get; set; }
+        public int AmountInBackOrder { get; set; }
     }
 }

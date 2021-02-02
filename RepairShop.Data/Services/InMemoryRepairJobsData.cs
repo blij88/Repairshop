@@ -59,7 +59,7 @@ namespace RepairShop.Data.Services
                 existing.Status = repairJob.Status;
                 existing.CustomerId = repairJob.CustomerId;
                 existing.HoursWorkedByEmployee = repairJob.HoursWorkedByEmployee;
-                existing.Description = repairJob.Description;
+                existing.JobDescription = repairJob.JobDescription;
                 existing.RequiredParts = repairJob.RequiredParts;
             }
         }

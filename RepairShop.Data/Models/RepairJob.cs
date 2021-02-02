@@ -23,7 +23,15 @@ namespace RepairShop.Data.Models
 
         [Required]
         public int CustomerId { get; set; }
-        public string Description { get; set; }
+
+        [Required]
+        public DeviceType DeviceType { get; set; }
+
+        // This should be filled in by the customer.
+        public string JobDescription { get; set; }
+
+        // This should be filled in by the employees to describe the work done.
+        public string RepairNotes { get; set; }
 
         // Dictionary with keys corresponding to PartId and values corresponding to amount of that part.
         public Dictionary<int, int> RequiredParts { get; set; }

@@ -16,5 +16,7 @@ namespace RepairShop.Data.Models
 
         [Required]
         public decimal HourlyCost { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
     }
 }

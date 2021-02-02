@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\DeviceType.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\RepairJob.cs" />
