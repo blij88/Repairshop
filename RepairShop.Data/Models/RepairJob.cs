@@ -10,9 +10,11 @@ namespace RepairShop.Data.Models
     public class RepairJob
     {
         public int Id { get; set; }
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
         public RepairStatus Status { get; set; }
 

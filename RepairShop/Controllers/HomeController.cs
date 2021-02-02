@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using RepairShop.Data.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,18 @@ namespace RepairShop.Controllers
 {
     public class HomeController : Controller
     {
+        IRepairJobsData db;
+        
+        public HomeController()
+        {
+            db = new InMemoryRepairJobsData();
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var Model = db.GetAll();
+            int statusAmount = db.AmountWithStatus(Data.Models.RepairStatus.Pending);
+            return View(Model);
         }
 
         public ActionResult About()
