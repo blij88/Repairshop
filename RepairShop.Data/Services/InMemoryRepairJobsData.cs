@@ -16,7 +16,9 @@ namespace RepairShop.Data.Services
             repairJobs = new List<RepairJob>
             {
                 new RepairJob { Id = 1, StartDate = new DateTime(2021, 2, 12), EndDate = new DateTime(2021, 2, 22), Status = RepairStatus.Pending, CustomerId = 1},
-                new RepairJob { Id = 2, StartDate = new DateTime(2021, 3, 1), EndDate = new DateTime(2021, 3, 10), Status = RepairStatus.Pending, CustomerId = 2}
+                new RepairJob { Id = 2, StartDate = new DateTime(2021, 3, 1), EndDate = new DateTime(2021, 3, 10), Status = RepairStatus.InProgress, CustomerId = 2},
+                new RepairJob { Id = 3, StartDate = new DateTime(2021, 2, 12), EndDate = new DateTime(2021, 2, 22), Status = RepairStatus.WaitingForComponents, CustomerId = 3},
+                new RepairJob { Id = 4, StartDate = new DateTime(2021, 3, 1), EndDate = new DateTime(2021, 3, 10), Status = RepairStatus.Done, CustomerId = 4}
             };
         }
 
