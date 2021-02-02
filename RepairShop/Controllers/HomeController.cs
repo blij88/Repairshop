@@ -1,4 +1,5 @@
 ﻿
+using RepairShop.Data.Models;
 using RepairShop.Data.Services;
 using RepairShop.ViewModels;
 using System;
@@ -23,7 +24,8 @@ namespace RepairShop.Controllers
             var ViewModel = new HomeIndexViewModel()
             {
                 RepairJobs = db.GetAll(),
-                RepairStatus = db.StatusAmounts()
+                RepairStatus = db.StatusAmounts(),
+                //IsLate = db.IsLate()
             };
             return View(ViewModel);
         }
@@ -42,15 +44,18 @@ namespace RepairShop.Controllers
             return View();
         }
 
+        [HttpGet]
         public  ActionResult Create()
         {
             return View();
         }
 
-        //public ActionResult Create()
-        //{
-        //    db.Add()
-        //    return View();
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(RepairJob Repair)
+        {
+            db.Add(Repair);
+            return View();
+        }
     }
 }

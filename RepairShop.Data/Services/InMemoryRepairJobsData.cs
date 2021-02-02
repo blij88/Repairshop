@@ -26,6 +26,8 @@ namespace RepairShop.Data.Services
         {
             repairJobs.Add(repairJob);
             repairJob.Id = repairJobs.Max(r => r.Id) + 1;
+            repairJob.CustomerId = repairJobs.Max(repairJobs => repairJobs.CustomerId) + 1;
+            repairJob.Status = RepairStatus.Pending;
         }
 
         public void Delete(int id)
