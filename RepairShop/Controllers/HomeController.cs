@@ -41,5 +41,16 @@ namespace RepairShop.Controllers
 
             return View();
         }
+
+        public  ActionResult Create()
+        {
+            return View();
+        }
+
+        public ActionResult Create()
+        {
+            db.Add()
+            return View();
+        }
     }
 }
