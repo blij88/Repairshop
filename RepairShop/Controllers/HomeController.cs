@@ -23,7 +23,7 @@ namespace RepairShop.Controllers
             var ViewModel = new HomeIndexViewModel()
             {
                 RepairJobs = db.GetAll(),
-                RepairJobPendingCount = db.AmountWithStatus(Data.Models.RepairStatus.Pending)
+                RepairStatus = db.StatusAmounts()
             };
             return View(ViewModel);
         }
@@ -47,10 +47,10 @@ namespace RepairShop.Controllers
             return View();
         }
 
-        public ActionResult Create()
-        {
-            db.Add()
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    db.Add()
+        //    return View();
+        //}
     }
 }
