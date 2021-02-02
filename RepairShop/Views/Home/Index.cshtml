@@ -5,15 +5,15 @@
 }
 
 
-<table>
-    @foreach (var item in Model.RepairStatus)
-    {
-        <tr>
-            <th>
-                @item.Key : @item.Value
-            </th>
-        </tr>
-    }
+<table class="table-condensed">
+    <tr>
+        @foreach (var item in Model.RepairStatus)
+        {
+            <td>
+                @item.Key: @item.Value
+            </td>
+        }
+    </tr>
 </table>
 <h2>Index</h2>
 <p>
@@ -22,7 +22,7 @@
 <table class="table">
     @*<tr>
             <th>
-                @Html.DisplayNameFor(model => model.RepairJobs.)
+                @Html.DisplayNameFor(model => model.RepairJobs)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
