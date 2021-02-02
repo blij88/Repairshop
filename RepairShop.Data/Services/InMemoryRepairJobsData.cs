@@ -80,5 +80,13 @@ namespace RepairShop.Data.Services
         {
             throw new NotImplementedException();
         }
+
+        public bool IsLate(int id)
+        {
+            var entry = Get(id);
+            var today = DateTime.Today;
+            return (entry.StartDate < today && entry.Status == RepairStatus.Pending) ||
+                (entry.EndDate < today && entry.Status != RepairStatus.Done);
+        }
     }
 }

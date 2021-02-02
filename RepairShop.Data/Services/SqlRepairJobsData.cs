@@ -83,5 +83,13 @@ namespace RepairShop.Data.Services
 
             return wageCost + materialCost;
         }
+
+        public bool IsLate(int id)
+        {
+            var entry = Get(id);
+            var today = DateTime.Today;
+            return (entry.StartDate < today && entry.Status == RepairStatus.Pending) ||
+                (entry.EndDate < today && entry.Status != RepairStatus.Done);
+        }
     }
 }
