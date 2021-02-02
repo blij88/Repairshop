@@ -14,9 +14,9 @@ namespace RepairShop.Controllers
     {
         IRepairJobsData db;
         
-        public HomeController()
+        public HomeController(IRepairJobsData db)
         {
-            db = new InMemoryRepairJobsData();
+            this.db = db;
         }
 
         public ActionResult Index()
