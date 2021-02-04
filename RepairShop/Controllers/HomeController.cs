@@ -64,6 +64,18 @@ namespace RepairShop.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var model = db.Get(id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
         public ActionResult Edit(RepairJob Repair)
         {
             db.Update(Repair);
