@@ -55,7 +55,13 @@ namespace RepairShop.Controllers
         public ActionResult Create(RepairJob Repair)
         {
             db.Add(Repair);
-            return View();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            db.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }
