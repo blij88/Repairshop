@@ -20,38 +20,39 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    @*<tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RepairJobs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th></th>
-        </tr>*@
+    @*
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RepairJobs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th></th>
+    </tr>*@
 
     @foreach (var item in Model.RepairJobs)
     {
-        <tr style=" background-color">
-            <td>
-                @Html.Label(item.Id.ToString())
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+    <tr style="@(item.IsLate ? "background-color : OrangeRed" : "background-color : White")">
+        <td>
+            @Html.Label(item.Id.ToString())
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
     }
 
 </table>

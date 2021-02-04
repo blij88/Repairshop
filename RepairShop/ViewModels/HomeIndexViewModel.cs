@@ -10,6 +10,5 @@ namespace RepairShop.ViewModels
     {
         public IEnumerable<RepairJob> RepairJobs { get; set; }
         public Dictionary<RepairStatus, int> RepairStatus { get; set; }
-        public bool IsLate { get; set; }
     }
 }

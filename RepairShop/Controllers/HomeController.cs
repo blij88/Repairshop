@@ -25,8 +25,8 @@ namespace RepairShop.Controllers
             {
                 RepairJobs = db.GetAll(),
                 RepairStatus = db.StatusAmounts(),
-                //IsLate = db.IsLate()
             };
+            
             return View(ViewModel);
         }
 
