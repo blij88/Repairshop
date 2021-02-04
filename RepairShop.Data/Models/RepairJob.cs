@@ -15,9 +15,8 @@ namespace RepairShop.Data.Models
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
 
-        [Required]
         [DisplayName("End date")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date), Required]
         public DateTime EndDate { get; set; }
         public RepairStatus Status { get; set; }
 

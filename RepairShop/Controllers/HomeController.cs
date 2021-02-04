@@ -81,5 +81,12 @@ namespace RepairShop.Controllers
             db.Update(Repair);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var model = db.Get(id);
+            return View(model);
+        }
     }
 }
