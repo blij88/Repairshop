@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.late-colors{
+    background-color:darkorange;
+    color:azure;
+}
+
+.late-link:any-link{
+    color:black;
+}

@@ -83,5 +83,6 @@ namespace RepairShop.Data.Services
 
             return wageCost + materialCost;
         }
+
     }
 }

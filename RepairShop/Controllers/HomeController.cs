@@ -88,5 +88,11 @@ namespace RepairShop.Controllers
             var model = db.Get(id);
             return View(model);
         }
+
+        public ActionResult GetPrice(int id)
+        {
+            var Model = db.GetPrice(id);
+            return View(Model);
+        }
     }
 }
