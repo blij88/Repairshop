@@ -13,10 +13,12 @@ namespace RepairShop.Data.Models
         public int Id { get; set; }
         [DisplayName("Start Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [DisplayName("End date")]
         [DataType(DataType.Date), Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
         public RepairStatus Status { get; set; }
 
