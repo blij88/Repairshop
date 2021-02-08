@@ -9,7 +9,12 @@ namespace RepairShop.Controllers
     public class CustomerController : Controller
     {
         // GET: Customer
-        public ActionResult Index()
+        public ActionResult Overview()
+        {
+            return View();
+        }
+
+        public ActionResult Create()
         {
             return View();
         }
