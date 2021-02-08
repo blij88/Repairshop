@@ -74,7 +74,7 @@ namespace RepairShop.Controllers
             {
                 ModelState.AddModelError(nameof(Repair.StartDate), "start date must be earlier then end date");
             }
-            if (DateTime.Now > Repair.StartDate)
+            if (DateTime.Now.Date > Repair.StartDate)
             {
                 ModelState.AddModelError(nameof(Repair.StartDate), "start date must be in the present");
             }
