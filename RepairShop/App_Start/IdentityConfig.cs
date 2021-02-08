@@ -10,7 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using RepairShop.Web.Models;
+using RepairShop.Data.Models;
+using RepairShop.Data.Services;
 
 namespace RepairShop.Web
 {

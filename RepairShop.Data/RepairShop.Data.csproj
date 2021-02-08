@@ -143,9 +143,11 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DeviceType.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\RepairJob.cs" />
     <Compile Include="Models\RepairStatus.cs" />
+    <Compile Include="Models\RoleType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ICustomersData.cs" />
     <Compile Include="Services\IEmployeesData.cs" />

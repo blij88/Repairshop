@@ -4,7 +4,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using RepairShop.Web.Models;
+using RepairShop.Data.Models;
+using RepairShop.Data.Services;
 
 namespace RepairShop.Web
 {

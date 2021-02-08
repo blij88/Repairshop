@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using RepairShop.Data.Models;
 using RepairShop.Web.Models;
 
 namespace RepairShop.Web.Controllers
