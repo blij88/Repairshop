@@ -11,5 +11,6 @@ namespace RepairShop.ViewModels
         public IEnumerable<RepairJob> RepairJobs { get; set; }
         public Dictionary<RepairStatus, int> RepairStatus { get; set; }
         public List<string> HeaderNames { get; set; }
+        public Employee Employee { get; set; }
     }
 }
