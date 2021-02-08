@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RepairShop.Data.Models;
-using RepairShop.Web.Models;
+using RepairShop.Web.ViewModels;
 
 namespace RepairShop.Web.Controllers
 {

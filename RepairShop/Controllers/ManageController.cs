@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using RepairShop.Web.Models;
+using RepairShop.Web.ViewModels;
 
 namespace RepairShop.Web.Controllers
 {
