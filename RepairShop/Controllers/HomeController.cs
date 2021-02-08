@@ -13,14 +13,14 @@ namespace RepairShop.Controllers
     public class HomeController : Controller
     {
         IRepairJobsData db;
-        IEmployeesData db1;
-        ICustomersData db2;
+        IEmployeesData EmployeeDB;
+        ICustomersData CustomerDB;
         
-        public HomeController(IRepairJobsData db, IEmployeesData db1, ICustomersData db2)
+        public HomeController(IRepairJobsData db, IEmployeesData EmployeeDB, ICustomersData CustomerDB)
         {
             this.db = db;
-            this.db1 = db1;
-            this.db2 = db2;
+            this.EmployeeDB = EmployeeDB;
+            this.CustomerDB = CustomerDB;
         }
 
         public ActionResult Index()
@@ -29,7 +29,7 @@ namespace RepairShop.Controllers
             {
                 RepairJobs = db.GetAll(),
                 RepairStatus = db.StatusAmounts(),
-                Customer = db2.GetAll()
+                Customer = CustomerDB.GetAll()
             };
             
             return View(ViewModel);
@@ -61,21 +61,20 @@ namespace RepairShop.Controllers
             {
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
-                CustomerId = id,
-                ThisCustomer = db2.Get(id)
+                ThisCustomer = CustomerDB.Get(id)
             };
             return View(ViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RequestJob(RepairJob Repair)
+        public ActionResult RequestJob(RepairJob Repair, int id)
         {
             if (Repair.StartDate > Repair.EndDate)
             {
                 ModelState.AddModelError(nameof(Repair.StartDate), "start date must be earlier then end date");
             }
-            if (Repair.StartDate < DateTime.Now)
+            if (DateTime.Now > Repair.StartDate)
             {
                 ModelState.AddModelError(nameof(Repair.StartDate), "start date must be in the present");
             }
@@ -85,7 +84,14 @@ namespace RepairShop.Controllers
             db.Add(Repair);
             return RedirectToAction("Index");
             }
-            return View();
+            
+            var ViewModel = new HomeCreateViewModel()
+            {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
+                ThisCustomer = CustomerDB.Get(id)
+            };
+            return View(ViewModel);
         }
 
         public ActionResult Delete(int id)

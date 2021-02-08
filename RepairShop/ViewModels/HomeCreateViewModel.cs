@@ -21,9 +21,6 @@ namespace RepairShop.ViewModels
         public DateTime EndDate { get; set; }
         public RepairStatus Status { get; set; }
 
-        [Required]
-        public int CustomerId { get; set; }
-
         [DisplayName("Description")]
         public string JobDescription { get; set; }
 
