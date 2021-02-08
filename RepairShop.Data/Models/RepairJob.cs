@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,14 @@ namespace RepairShop.Data.Models
     public class RepairJob
     {
         public int Id { get; set; }
+        [DisplayName("Start Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
+        [DisplayName("End date")]
+        [DataType(DataType.Date), Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
         public RepairStatus Status { get; set; }
 
@@ -25,12 +29,15 @@ namespace RepairShop.Data.Models
         public int CustomerId { get; set; }
 
         [Required]
+        [DisplayName("Type")]
         public DeviceType DeviceType { get; set; }
 
         // This should be filled in by the customer.
+        [DisplayName("Description")]
         public string JobDescription { get; set; }
 
         // This should be filled in by the employees to describe the work done.
+        [DisplayName("Repair notes")]
         public string RepairNotes { get; set; }
 
         // Dictionary with keys corresponding to PartId and values corresponding to amount of that part.
