@@ -13,18 +13,21 @@ namespace RepairShop.Controllers
     public class HomeController : Controller
     {
         IRepairJobsData db;
+        IEmployeesData db1;
         
-        public HomeController(IRepairJobsData db)
+        public HomeController(IRepairJobsData db, IEmployeesData db1)
         {
             this.db = db;
+            this.db1 = db1;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
             var ViewModel = new HomeIndexViewModel()
             {
                 RepairJobs = db.GetAll(),
                 RepairStatus = db.StatusAmounts(),
+                Employee = db1.Get(id)
             };
             
             return View(ViewModel);
@@ -54,8 +57,21 @@ namespace RepairShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RepairJob Repair)
         {
+            if (Repair.StartDate > Repair.EndDate)
+            {
+                ModelState.AddModelError(nameof(Repair.StartDate), "start date must be earlier then end date");
+            }
+            if (Repair.StartDate < DateTime.Now)
+            {
+                ModelState.AddModelError(nameof(Repair.StartDate), "start date must be in the present");
+            }
+
+            if (ModelState.IsValid)
+            {
             db.Add(Repair);
             return RedirectToAction("Index");
+            }
+            return View();
         }
 
         public ActionResult Delete(int id)
