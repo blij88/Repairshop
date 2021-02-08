@@ -55,14 +55,21 @@ namespace RepairShop.Controllers
         }
 
         [HttpGet]
-        public  ActionResult Create()
+        public  ActionResult RequestJob(int id)
         {
-            return View();
+            var ViewModel = new HomeCreateViewModel()
+            {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
+                CustomerId = id,
+                ThisCustomer = db2.Get(id)
+            };
+            return View(ViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RepairJob Repair)
+        public ActionResult RequestJob(RepairJob Repair)
         {
             if (Repair.StartDate > Repair.EndDate)
             {
