@@ -14,20 +14,22 @@ namespace RepairShop.Controllers
     {
         IRepairJobsData db;
         IEmployeesData db1;
+        ICustomersData db2;
         
-        public HomeController(IRepairJobsData db, IEmployeesData db1)
+        public HomeController(IRepairJobsData db, IEmployeesData db1, ICustomersData db2)
         {
             this.db = db;
             this.db1 = db1;
+            this.db2 = db2;
         }
 
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
             var ViewModel = new HomeIndexViewModel()
             {
                 RepairJobs = db.GetAll(),
                 RepairStatus = db.StatusAmounts(),
-                Employee = db1.Get(id)
+                Customer = db2.GetAll()
             };
             
             return View(ViewModel);

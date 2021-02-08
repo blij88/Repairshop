@@ -9,7 +9,7 @@ namespace RepairShop.Controllers
     public class EmployeeController : Controller
     {
         // GET: Employee
-        public ActionResult WorkOrders()
+        public ActionResult Index()
         {
             return View();
         }
