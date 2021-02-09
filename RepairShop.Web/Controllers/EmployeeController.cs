@@ -1,8 +1,14 @@
-﻿using RepairShop.Data.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using RepairShop.Data.Models;
 using RepairShop.Data.Services;
+using RepairShop.Web;
+using RepairShop.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,16 +16,37 @@ namespace RepairShop.Controllers
 {
     public class EmployeeController : Controller
     {
-        IEmployeesData db1;
+        IEmployeesData employeeDb;
+        private ApplicationUserManager _userManager;
 
-        public EmployeeController(IEmployeesData db1)
+        public EmployeeController(IEmployeesData employeeDb)
         {
-            this.db1 = db1;
+            this.employeeDb = employeeDb;
         }
-        // GET: Employee
-        public ActionResult Overview()
+
+        public EmployeeController(IEmployeesData employeeDb, ApplicationUserManager userManager)
         {
-            var Model = db1.GetAll() ;
+            this.employeeDb = employeeDb;
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+
+        // GET: Employee
+        public ActionResult Index()
+        {
+            var Model = employeeDb.GetAll() ;
             return View(Model);
         }
 
@@ -29,10 +56,22 @@ namespace RepairShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Employee Employee)
+        public async Task<ActionResult> Create(CreateEmployeeViewModel view)
         {
-            db1.Add(Employee);
-            return RedirectToAction("Overview");
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = view.Employee.Name, Email = view.Employee.Email };
+                var result = await UserManager.CreateAsync(user, "1234Aa=");
+                if (result.Succeeded)
+                {
+                    employeeDb.Add(view.Employee);
+                    return RedirectToAction("Index");
+                }
+
+                view.Errors = result.Errors;
+            }
+
+            return View(view);
         }
     }
 }
