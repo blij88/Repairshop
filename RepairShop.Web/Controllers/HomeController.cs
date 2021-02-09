@@ -29,7 +29,7 @@ namespace RepairShop.Controllers
             {
                 RepairJobs = db.GetAll(),
                 RepairStatus = db.StatusAmounts(),
-                Customer = CustomerDB.GetAll()
+                Customer = CustomerDB.GetAll(),
             };
             
             return View(ViewModel);
@@ -120,12 +120,6 @@ namespace RepairShop.Controllers
 
         [HttpGet]
         public ActionResult Details(int id)
-        {
-            var model = db.Get(id);
-            return View(model);
-        }
-
-        public ActionResult GetPrice(int id)
         {
             var viewModel = new HomeDetailsViewModel()
             {
