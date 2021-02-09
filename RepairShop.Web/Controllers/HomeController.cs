@@ -1,7 +1,7 @@
 ﻿
 using RepairShop.Data.Models;
 using RepairShop.Data.Services;
-using RepairShop.ViewModels;
+using RepairShop.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,8 +127,12 @@ namespace RepairShop.Controllers
 
         public ActionResult GetPrice(int id)
         {
-            var Model = db.GetPrice(id);
-            return View(Model);
+            var viewModel = new HomeDetailsViewModel()
+            {
+                RepairJob = db.Get(id),
+                Price = db.GetPrice(id)
+            };
+            return View(viewModel);
         }
     }
 }

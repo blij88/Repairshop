@@ -15,7 +15,5 @@ namespace RepairShop.Data.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        public RoleType Role { get; set; }
     }
 }

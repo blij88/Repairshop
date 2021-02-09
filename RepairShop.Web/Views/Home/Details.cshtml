@@ -1,0 +1,54 @@
+﻿@model RepairShop.Web.ViewModels.HomeDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RepairJob</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RepairJob.StartDate)
+        </dt>
+
+        <dd>
+            @Model.RepairJob.StartDate.ToString("dd-MM-yyyy")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RepairJob.EndDate)
+        </dt>
+
+        <dd>
+            @Model.RepairJob.EndDate.ToString("dd-MM-yyyy")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RepairJob.JobDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RepairJob.JobDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RepairJob.RepairNotes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RepairJob.RepairNotes)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RepairJob.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

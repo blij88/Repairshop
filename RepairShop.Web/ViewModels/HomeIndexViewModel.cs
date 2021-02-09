@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RepairShop.ViewModels
+namespace RepairShop.Web.ViewModels
 {
     public class HomeIndexViewModel
     {

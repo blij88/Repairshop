@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepairShop.Web", "RepairShop\RepairShop.Web.csproj", "{CD3D313B-AC1E-41D1-ADB0-281A008332D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepairShop.Web", "RepairShop.Web\RepairShop.Web.csproj", "{CD3D313B-AC1E-41D1-ADB0-281A008332D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepairShop.Data", "RepairShop.Data\RepairShop.Data.csproj", "{B8C370D4-D5EA-4DA1-83F9-3E3A83C45254}"
 EndProject

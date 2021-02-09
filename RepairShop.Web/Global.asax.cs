@@ -10,7 +10,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 
-namespace RepairShop
+namespace RepairShop.Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
