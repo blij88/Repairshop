@@ -8,7 +8,7 @@ using System.Web;
 
 namespace RepairShop.Web.ViewModels
 {
-    public class HomeCreateViewModel
+    public class CreateJobViewModel
     {
         [DisplayName("Start Date")]
         [DataType(DataType.Date)]

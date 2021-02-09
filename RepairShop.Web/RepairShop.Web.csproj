@@ -211,7 +211,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\HomeCreateViewModel.cs" />
+    <Compile Include="ViewModels\CreateJobViewModel.cs" />
     <Compile Include="ViewModels\HomeDetailsViewModel.cs" />
     <Compile Include="ViewModels\HomeIndexViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -253,9 +253,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\RequestJob.cshtml" />
+    <Content Include="Views\Customer\RequestJob.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
-	<Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\GetPrice.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -276,7 +276,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Employee\Overview.cshtml" />
-    <Content Include="Views\Customer\Overview.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Create.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
   </ItemGroup>

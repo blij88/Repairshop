@@ -1,5 +1,6 @@
 ﻿using RepairShop.Data.Models;
 using RepairShop.Data.Services;
+using RepairShop.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,31 +11,74 @@ namespace RepairShop.Controllers
 {
     public class CustomerController : Controller
     {
-        ICustomersData db1;
+        ICustomersData customerDb;
+        IRepairJobsData jobsDb;
 
-        public CustomerController(ICustomersData db1)
+        public CustomerController(ICustomersData customerDb, IRepairJobsData jobsDb)
         {
-            this.db1 = db1;
+            this.customerDb = customerDb;
+            this.jobsDb = jobsDb;
         }
         // GET: Customer
-        public ActionResult Overview()
+        public ActionResult Index()
         {
-            var Model = db1.GetAll(); ;
+            var Model = customerDb.GetAll(); ;
             return View(Model);
         }
-
 
         public ActionResult Create()
         {
             return View();
         }
 
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer)
         {
-            db1.Add(customer);
+            customerDb.Add(customer);
             return RedirectToAction("overview");
+        }
+
+        [HttpGet]
+        public ActionResult RequestJob(int id)
+        {
+            var ViewModel = new CreateJobViewModel()
+            {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
+                ThisCustomer = customerDb.Get(id)
+            };
+            return View(ViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RequestJob(RepairJob repair, int id)
+        {
+            if (repair.StartDate > repair.EndDate)
+            {
+                ModelState.AddModelError(nameof(repair.StartDate), "start date must be earlier then end date");
+            }
+            if (DateTime.Now.Date > repair.StartDate)
+            {
+                ModelState.AddModelError(nameof(repair.StartDate), "start date must not be in the past");
+            }
+
+            repair.CustomerId = id;
+
+            if (ModelState.IsValid)
+            {
+                jobsDb.Add(repair);
+                return RedirectToAction("Index");
+            }
+
+            var ViewModel = new CreateJobViewModel()
+            {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
+                ThisCustomer = customerDb.Get(id)
+            };
+            return View(ViewModel);
         }
     }
 }

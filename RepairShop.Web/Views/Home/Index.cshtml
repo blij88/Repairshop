@@ -35,7 +35,7 @@
             Status
         </th>
         <th>
-            Customer Id
+            Customer
         </th>
         <th></th>
     </tr>
@@ -57,7 +57,7 @@
     </td>
 
     <td>
-        @Html.DisplayFor(modelItem => item.CustomerId)
+        @Html.DisplayFor(modelItem => item.Customer)
     </td>
     <td>
         @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "late-link" })  |

@@ -12,24 +12,33 @@ namespace RepairShop.Controllers
 {
     public class HomeController : Controller
     {
-        IRepairJobsData db;
-        IEmployeesData EmployeeDB;
-        ICustomersData CustomerDB;
+        IRepairJobsData jobsDb;
+        IEmployeesData employeeDb;
+        ICustomersData customerDb;
         
-        public HomeController(IRepairJobsData db, IEmployeesData EmployeeDB, ICustomersData CustomerDB)
+        public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb)
         {
-            this.db = db;
-            this.EmployeeDB = EmployeeDB;
-            this.CustomerDB = CustomerDB;
+            this.jobsDb = jobsDb;
+            this.employeeDb = employeeDb;
+            this.customerDb = customerDb;
         }
 
         public ActionResult Index()
         {
             var ViewModel = new HomeIndexViewModel()
             {
-                RepairJobs = db.GetAll(),
-                RepairStatus = db.StatusAmounts(),
-                Customer = CustomerDB.GetAll(),
+                RepairJobs = jobsDb.GetAll().Join(customerDb.GetAll(),
+                    r => r.CustomerId, c => c.Id,
+                    (r, c) => new QueryRepairJob
+                    {
+                        Id = r.Id,
+                        StartDate = r.StartDate,
+                        EndDate = r.EndDate,
+                        Customer = c.Name,
+                        IsLate = r.IsLate,
+                        Status = r.Status
+                    }),
+                RepairStatus = jobsDb.StatusAmounts(),
             };
             
             return View(ViewModel);
@@ -54,56 +63,16 @@ namespace RepairShop.Controllers
             return View();
         }
 
-        [HttpGet]
-        public  ActionResult RequestJob(int id)
-        {
-            var ViewModel = new HomeCreateViewModel()
-            {
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
-                ThisCustomer = CustomerDB.Get(id)
-            };
-            return View(ViewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RequestJob(RepairJob Repair, int id)
-        {
-            if (Repair.StartDate > Repair.EndDate)
-            {
-                ModelState.AddModelError(nameof(Repair.StartDate), "start date must be earlier then end date");
-            }
-            if (DateTime.Now.Date > Repair.StartDate)
-            {
-                ModelState.AddModelError(nameof(Repair.StartDate), "start date must be in the present");
-            }
-
-            if (ModelState.IsValid)
-            {
-            db.Add(Repair);
-            return RedirectToAction("Index");
-            }
-            
-            var ViewModel = new HomeCreateViewModel()
-            {
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
-                ThisCustomer = CustomerDB.Get(id)
-            };
-            return View(ViewModel);
-        }
-
         public ActionResult Delete(int id)
         {
-            db.Delete(id);
+            jobsDb.Delete(id);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model = db.Get(id);
+            var model = jobsDb.Get(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -114,17 +83,19 @@ namespace RepairShop.Controllers
         [HttpPost]
         public ActionResult Edit(RepairJob Repair)
         {
-            db.Update(Repair);
+            jobsDb.Update(Repair);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Details(int id)
         {
+            var job = jobsDb.Get(id);
             var viewModel = new HomeDetailsViewModel()
             {
-                RepairJob = db.Get(id),
-                Price = db.GetPrice(id)
+                RepairJob = job,
+                Customer = customerDb.Get(job.CustomerId),
+                Price = jobsDb.GetPrice(id)
             };
             return View(viewModel);
         }

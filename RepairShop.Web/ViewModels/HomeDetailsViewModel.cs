@@ -11,7 +11,7 @@ namespace RepairShop.Web.ViewModels
     public class HomeDetailsViewModel
     {
         public RepairJob RepairJob { get; set; }
-
+        public Customer Customer { get; set; }
         public decimal Price { get; set; }
     }
 }
