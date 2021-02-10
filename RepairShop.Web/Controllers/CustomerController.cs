@@ -36,7 +36,7 @@ namespace RepairShop.Controllers
         public ActionResult Create(Customer customer)
         {
             customerDb.Add(customer);
-            return RedirectToAction("overview");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

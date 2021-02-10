@@ -46,32 +46,45 @@ namespace RepairShop.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            var Model = employeeDb.GetAll() ;
-            return View(Model);
+
+            var model = employeeDb.GetAll().Join(UserManager.Users,
+               e => e.UserId,
+               u => u.Id,
+               (e, u) => new EmployeeIndexViewModel
+               {
+                   Name = u.UserName,
+                   Email = u.Email,
+                   Phone = u.PhoneNumber,
+                   HourlyCost = e.HourlyCost
+               });
+
+            return View(model);
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(CreateEmployeeViewModel view)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(CreateEmployeeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = view.Employee.Name, Email = view.Employee.Email };
+                var user = new ApplicationUser { UserName = model.Name, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, "1234Aa=");
                 if (result.Succeeded)
                 {
-                    employeeDb.Add(view.Employee);
+                    employeeDb.Add(new Employee { HourlyCost = model.HourlyCost, UserId = user.Id});
                     return RedirectToAction("Index");
                 }
 
-                view.Errors = result.Errors;
+                model.Errors = result.Errors;
             }
 
-            return View(view);
+            return View(model);
         }
     }
 }

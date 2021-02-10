@@ -37,7 +37,7 @@ namespace RepairShop.Data.Services
 
         public IEnumerable<Employee> GetAll()
         {
-            return db.Employees.OrderBy(e => e.Name);
+            return db.Employees;
         }
 
         public void Update(Employee employee)
