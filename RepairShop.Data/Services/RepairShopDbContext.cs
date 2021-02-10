@@ -15,6 +15,7 @@ namespace RepairShop.Data.Services
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Part> Parts { get; set; }
+        public DbSet<RepairJobEmployee> RepairJobsEmployees { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

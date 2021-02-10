@@ -146,6 +146,7 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\RepairJob.cs" />
+    <Compile Include="Models\RepairJobEmployee.cs" />
     <Compile Include="Models\RepairStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ICustomersData.cs" />
@@ -155,11 +156,13 @@
     <Compile Include="Services\InMemoryRepairJobsData.cs" />
     <Compile Include="Services\IPartsData.cs" />
     <Compile Include="Services\IRepairJobsData.cs" />
+    <Compile Include="Services\IRepairJobsEmployeesData.cs" />
     <Compile Include="Services\RepairShopDbContext.cs" />
     <Compile Include="Services\SqlCustomersData.cs" />
     <Compile Include="Services\SqlEmployeesData.cs" />
     <Compile Include="Services\SqlPartsData.cs" />
     <Compile Include="Services\SqlRepairJobsData.cs" />
+    <Compile Include="Services\SqlRepairJobsEmployeesData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

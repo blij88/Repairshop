@@ -11,7 +11,6 @@ namespace RepairShop.Web.ViewModels
     public class JobEditViewModel
     {
         public RepairJob Job { get; set; }
-        public int EmployeeId { get; set; }
-        public int HoursWorked { get; set; }
+        public RepairJobEmployee JobEmployee { get; set; }
     }
 }

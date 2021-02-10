@@ -58,7 +58,6 @@ namespace RepairShop.Data.Services
                 existing.EndDate = repairJob.EndDate;
                 existing.Status = repairJob.Status;
                 existing.CustomerId = repairJob.CustomerId;
-                existing.HoursWorkedByEmployee = repairJob.HoursWorkedByEmployee;
                 existing.JobDescription = repairJob.JobDescription;
                 existing.RequiredParts = repairJob.RequiredParts;
             }

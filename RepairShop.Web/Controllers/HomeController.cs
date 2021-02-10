@@ -18,12 +18,15 @@ namespace RepairShop.Controllers
         IRepairJobsData jobsDb;
         IEmployeesData employeeDb;
         ICustomersData customerDb;
+        IRepairJobsEmployeesData jobEmployeeDb;
 
-        public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb)
+        public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
+            IRepairJobsEmployeesData jobEmployeeDb)
         {
             this.jobsDb = jobsDb;
             this.employeeDb = employeeDb;
             this.customerDb = customerDb;
+            this.jobEmployeeDb = jobEmployeeDb;
         }
 
         public ActionResult Index()
@@ -87,15 +90,23 @@ namespace RepairShop.Controllers
             // TODO: Redirect to appropriate message.
             if (employee == null)
                 return RedirectToAction("Index");
-            
-            if (!job.HoursWorkedByEmployee.ContainsKey(employee.Id))
-                job.HoursWorkedByEmployee[employee.Id] = 0;
+
+            var jobEmployee = jobEmployeeDb.Get(id, employee.Id);
+            if (jobEmployee == null)
+            {
+                jobEmployee = new RepairJobEmployee
+                {
+                    RepairJobId = id,
+                    EmployeeId = employee.Id,
+                    HoursWorked = 0
+                };
+                jobEmployeeDb.Add(jobEmployee);
+            }
 
             var model = new JobEditViewModel
             {
                Job = job,
-               EmployeeId = employee.Id,
-               HoursWorked = job.HoursWorkedByEmployee[employee.Id],
+               JobEmployee = jobEmployee
             };
 
             return View(model);
@@ -105,8 +116,8 @@ namespace RepairShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(JobEditViewModel model)
         {
-            model.Job.HoursWorkedByEmployee[model.EmployeeId] = model.HoursWorked;
             jobsDb.Update(model.Job);
+            jobEmployeeDb.Update(model.JobEmployee);
             return RedirectToAction("Index");
         }
 

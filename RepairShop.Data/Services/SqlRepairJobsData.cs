@@ -68,10 +68,10 @@ namespace RepairShop.Data.Services
             var job = Get(id);
 
             decimal wageCost = 0M;
-            foreach (var kvp in job.HoursWorkedByEmployee)
+            foreach (var rje in db.RepairJobsEmployees.Where(r => r.RepairJobId == id))
             {
-                var employee = db.Employees.FirstOrDefault(e => e.Id == kvp.Key);
-                wageCost += employee.HourlyCost * kvp.Value;
+                var employee = db.Employees.Find(rje.EmployeeId);
+                wageCost += employee.HourlyCost * rje.HoursWorked;
             }
 
             decimal materialCost = 0M;
