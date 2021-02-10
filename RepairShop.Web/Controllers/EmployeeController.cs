@@ -42,7 +42,6 @@ namespace RepairShop.Controllers
             }
         }
 
-
         // GET: Employee
         public ActionResult Index()
         {

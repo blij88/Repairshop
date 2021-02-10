@@ -1,6 +1,9 @@
 ﻿
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using RepairShop.Data.Models;
 using RepairShop.Data.Services;
+using RepairShop.Web;
 using RepairShop.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,7 +18,7 @@ namespace RepairShop.Controllers
         IRepairJobsData jobsDb;
         IEmployeesData employeeDb;
         ICustomersData customerDb;
-        
+
         public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb)
         {
             this.jobsDb = jobsDb;
@@ -72,18 +75,38 @@ namespace RepairShop.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model = jobsDb.Get(id);
-            if (model == null)
+            var job = jobsDb.Get(id);
+            if (job == null)
             {
                 return HttpNotFound();
             }
+
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+
+            // TODO: Redirect to appropriate message.
+            if (employee == null)
+                return RedirectToAction("Index");
+            
+            if (!job.HoursWorkedByEmployee.ContainsKey(employee.Id))
+                job.HoursWorkedByEmployee[employee.Id] = 0;
+
+            var model = new JobEditViewModel
+            {
+               Job = job,
+               EmployeeId = employee.Id,
+               HoursWorked = job.HoursWorkedByEmployee[employee.Id],
+            };
+
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(RepairJob Repair)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(JobEditViewModel model)
         {
-            jobsDb.Update(Repair);
+            model.Job.HoursWorkedByEmployee[model.EmployeeId] = model.HoursWorked;
+            jobsDb.Update(model.Job);
             return RedirectToAction("Index");
         }
 
