@@ -213,6 +213,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CreateEmployeeViewModel.cs" />
     <Compile Include="ViewModels\CreateJobViewModel.cs" />
+    <Compile Include="ViewModels\CustomerIndexViewModel.cs" />
     <Compile Include="ViewModels\EmployeeIndexViewModel.cs" />
     <Compile Include="ViewModels\HomeDetailsViewModel.cs" />
     <Compile Include="ViewModels\HomeIndexViewModel.cs" />
@@ -279,7 +280,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Customer\Create.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>

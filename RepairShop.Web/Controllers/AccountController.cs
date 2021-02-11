@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RepairShop.Data.Models;
+using RepairShop.Data.Services;
 using RepairShop.Web.ViewModels;
 
 namespace RepairShop.Web.Controllers
@@ -18,15 +19,19 @@ namespace RepairShop.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ICustomersData customerDb;
 
-        public AccountController()
+        public AccountController(ICustomersData customerDb)
         {
+            this.customerDb = customerDb;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager,
+            ICustomersData customerDb )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            this.customerDb = customerDb;
         }
 
         public ApplicationSignInManager SignInManager
@@ -157,6 +162,7 @@ namespace RepairShop.Web.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    customerDb.Add(new Customer { UserId = user.Id });
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

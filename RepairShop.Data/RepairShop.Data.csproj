@@ -151,7 +151,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ICustomersData.cs" />
     <Compile Include="Services\IEmployeesData.cs" />
-    <Compile Include="Services\InMemoryCustomersData.cs" />
     <Compile Include="Services\InMemoryPartsData.cs" />
     <Compile Include="Services\InMemoryRepairJobsData.cs" />
     <Compile Include="Services\IPartsData.cs" />

@@ -19,9 +19,10 @@ namespace RepairShop.Controllers
         IEmployeesData employeeDb;
         ICustomersData customerDb;
         IRepairJobsEmployeesData jobEmployeeDb;
+        ApplicationUserManager _userManager;
 
         public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
-            IRepairJobsEmployeesData jobEmployeeDb)
+    IRepairJobsEmployeesData jobEmployeeDb)
         {
             this.jobsDb = jobsDb;
             this.employeeDb = employeeDb;
@@ -29,20 +30,42 @@ namespace RepairShop.Controllers
             this.jobEmployeeDb = jobEmployeeDb;
         }
 
+        public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
+            IRepairJobsEmployeesData jobEmployeeDb, ApplicationUserManager userManager)
+        {
+            this.jobsDb = jobsDb;
+            this.employeeDb = employeeDb;
+            this.customerDb = customerDb;
+            this.jobEmployeeDb = jobEmployeeDb;
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         public ActionResult Index()
         {
             var ViewModel = new HomeIndexViewModel()
             {
-                RepairJobs = jobsDb.GetAll().Join(customerDb.GetAll(),
-                    r => r.CustomerId, c => c.Id,
-                    (r, c) => new QueryRepairJob
+                RepairJobs = jobsDb.GetAll().Join(customerDb.GetAll(), r => r.CustomerId, c => c.Id, (r, c) => new {r, c}).
+                    Join(UserManager.Users, rc => rc.c.UserId, u => u.Id,
+                    (rc, u) => new QueryRepairJob
                     {
-                        Id = r.Id,
-                        StartDate = r.StartDate,
-                        EndDate = r.EndDate,
-                        Customer = c.Name,
-                        IsLate = r.IsLate,
-                        Status = r.Status
+                        Id = rc.r.Id,
+                        StartDate = rc.r.StartDate,
+                        EndDate = rc.r.EndDate,
+                        Customer = u.UserName,
+                        IsLate = rc.r.IsLate,
+                        Status = rc.r.Status
                     }),
                 RepairStatus = jobsDb.StatusAmounts(),
             };
