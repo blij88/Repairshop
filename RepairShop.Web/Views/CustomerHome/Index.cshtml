@@ -1,0 +1,54 @@
+﻿@model IEnumerable<RepairShop.Web.ViewModels.CustomerQueryRepairJob>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table ">
+    
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Start date
+        </th>
+        <th>
+            End Date
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr class="">
+    <td>
+        @Html.Label(item.Id.ToString())
+    </td>
+    <td>
+        @item.StartDate.ToString("dd-MM-yyyy")
+    </td>
+    <td>
+        @item.EndDate.ToString("dd-MM-yyyy")
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status)
+    </td>
+    <td>
+        @if (!item.HasStarted)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "late-link" })
+        }|
+        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "late-link" }) |
+    </td>
+</tr>
+    }
+
+</table>

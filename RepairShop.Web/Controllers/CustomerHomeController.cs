@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using RepairShop.Data.Models;
 using RepairShop.Data.Services;
@@ -11,9 +10,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace RepairShop.Controllers
+namespace RepairShop.Web.Controllers
 {
-    public class HomeController : Controller
+    public class CustomerHomeController : Controller
     {
         IRepairJobsData jobsDb;
         IEmployeesData employeeDb;
@@ -21,7 +20,7 @@ namespace RepairShop.Controllers
         IRepairJobsEmployeesData jobEmployeeDb;
         ApplicationUserManager _userManager;
 
-        public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
+        public CustomerHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
     IRepairJobsEmployeesData jobEmployeeDb)
         {
             this.jobsDb = jobsDb;
@@ -30,7 +29,7 @@ namespace RepairShop.Controllers
             this.jobEmployeeDb = jobEmployeeDb;
         }
 
-        public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
+        public CustomerHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
             IRepairJobsEmployeesData jobEmployeeDb, ApplicationUserManager userManager)
         {
             this.jobsDb = jobsDb;
@@ -54,88 +53,94 @@ namespace RepairShop.Controllers
 
         public ActionResult Index()
         {
-            var repairJobs = jobsDb.GetAll().
-                Join(customerDb.GetAll(), r => r.CustomerId, c => c.Id, (r, c) => new { r, c }).
-                Join(UserManager.Users, rc => rc.c.UserId, u => u.Id,
-                (rc, u) => new QueryRepairJob
+            var userId = User.Identity.GetUserId();
+            var customer = customerDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (customer == null)
+                return HttpNotFound();
+
+            var repairJobs = jobsDb.GetAll().Where(r => r.CustomerId == customer.Id).
+                Select(r => new CustomerQueryRepairJob()
                 {
-                    Id = rc.r.Id,
-                    StartDate = rc.r.StartDate,
-                    EndDate = rc.r.EndDate,
-                    Customer = u.UserName,
-                    IsLate = rc.r.IsLate,
-                    Status = rc.r.Status
+                    Id = r.Id,
+                    StartDate = r.StartDate,
+                    EndDate = r.EndDate,
+                    Status = r.Status,
+                    HasStarted = r.Status != RepairStatus.Pending
                 });
 
-            var ViewModel = new HomeIndexViewModel()
-            {
-                RepairJobs = repairJobs,
-                RepairStatus = jobsDb.StatusAmounts(),
-            };
-            
-            return View(ViewModel);
-        }
-
-        public ActionResult Delete(int id)
-        {
-            jobsDb.Delete(id);
-            return RedirectToAction("Index");
+            return View(repairJobs);
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            // This page should be inaccesible when the job has already started.
             var job = jobsDb.Get(id);
-            if (job == null)
-            {
+            if (job == null || job.Status != RepairStatus.Pending)
                 return HttpNotFound();
-            }
 
+            // Make sure only the original customer can access this page.
             var userId = User.Identity.GetUserId();
-            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            var customer = customerDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (customer == null || customer.Id != job.CustomerId)
+                return HttpNotFound();
 
-            // TODO: Redirect to appropriate message.
-            if (employee == null)
-                return RedirectToAction("Index");
-
-            var jobEmployee = jobEmployeeDb.Get(id, employee.Id);
-            if (jobEmployee == null)
+            var model = new CustomerHomeEditViewModel
             {
-                jobEmployee = new RepairJobEmployee
-                {
-                    RepairJobId = id,
-                    EmployeeId = employee.Id,
-                    HoursWorked = 0
-                };
-                jobEmployeeDb.Add(jobEmployee);
-            }
-
-            var model = new JobEditViewModel
-            {
-               Job = job,
-               JobEmployee = jobEmployee
+                Id = job.Id,
+                StartDate = job.StartDate,
+                EndDate = job.EndDate,
+                CustomerId = job.CustomerId,
+                Status = RepairStatus.Pending,
+                JobDescription = job.JobDescription
             };
-
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(JobEditViewModel model)
+        public ActionResult Edit(CustomerHomeEditViewModel model)
         {
-            jobsDb.Update(model.Job);
-            jobEmployeeDb.Update(model.JobEmployee);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                jobsDb.Update(new RepairJob()
+                {
+                    Id = model.Id,
+                    StartDate = model.StartDate,
+                    EndDate = model.EndDate,
+                    CustomerId = model.CustomerId,
+                    Status = RepairStatus.Pending,
+                    JobDescription = model.JobDescription
+                });
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
 
         [HttpGet]
         public ActionResult Details(int id)
         {
             var job = jobsDb.Get(id);
-            var viewModel = new HomeDetailsViewModel()
+            if (job == null)
+                return HttpNotFound();
+
+            // Make sure we only show this to the customer that requested the job.
+            var userId = User.Identity.GetUserId();
+            var customer = customerDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (customer == null || customer.Id != job.CustomerId)
+                return HttpNotFound();
+
+            // Show only the data that the customer needs to see.
+            var viewModel = new CustomerHomeDetailsViewModel()
             {
-                RepairJob = job,
-                Customer = customerDb.Get(job.CustomerId),
+                Id = job.Id,
+                StartDate = job.StartDate,
+                EndDate = job.EndDate,
+                Status = job.Status,
+                JobDescription = job.JobDescription,
+                RepairNotes = job.RepairNotes,
+                HasStarted = job.Status != RepairStatus.Pending,
                 Price = jobsDb.GetPrice(id)
             };
             return View(viewModel);
