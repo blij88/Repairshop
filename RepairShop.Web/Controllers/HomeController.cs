@@ -73,25 +73,6 @@ namespace RepairShop.Controllers
             return View(ViewModel);
         }
 
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         public ActionResult Delete(int id)
         {
             jobsDb.Delete(id);
@@ -155,6 +136,52 @@ namespace RepairShop.Controllers
                 Price = jobsDb.GetPrice(id)
             };
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            var userId = User.Identity.GetUserId();
+            var customer = customerDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (customer == null)
+                return RedirectToAction("Index");
+
+            var ViewModel = new CreateJobViewModel()
+            {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
+                CustomerId = customer.Id
+            };
+            return View(ViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CreateJobViewModel model)
+        {
+            if (model.StartDate > model.EndDate)
+            {
+                ModelState.AddModelError(nameof(model.StartDate), "start date must be earlier then end date");
+            }
+            if (DateTime.Now.Date > model.StartDate)
+            {
+                ModelState.AddModelError(nameof(model.StartDate), "start date must not be in the past");
+            }
+
+            if (ModelState.IsValid)
+            {
+                jobsDb.Add(new RepairJob()
+                {
+                    StartDate = model.StartDate,
+                    EndDate = model.EndDate,
+                    CustomerId = model.CustomerId,
+                    Status = RepairStatus.Pending,
+                    JobDescription = model.JobDescription
+                });
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
     }
 }

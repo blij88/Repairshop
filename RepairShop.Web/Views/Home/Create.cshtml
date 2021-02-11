@@ -13,9 +13,7 @@
     
 <div class="form-horizontal">
     <h4>RepairJob</h4>
-    <div>
-        @Model.CustomerId
-    </div>
+    @Html.HiddenFor(model => model.CustomerId)
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">

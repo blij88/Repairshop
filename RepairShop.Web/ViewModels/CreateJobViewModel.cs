@@ -24,6 +24,6 @@ namespace RepairShop.Web.ViewModels
         [DisplayName("Description")]
         public string JobDescription { get; set; }
 
-        public Customer ThisCustomer { get; set; }
+        public int CustomerId { get; set; }
     }
 }

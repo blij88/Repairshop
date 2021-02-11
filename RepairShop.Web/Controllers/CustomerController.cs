@@ -63,39 +63,38 @@ namespace RepairShop.Controllers
             {
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
-                ThisCustomer = customerDb.Get(id)
+                CustomerId = id
             };
             return View(ViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RequestJob(RepairJob repair, int id)
+        public ActionResult RequestJob(CreateJobViewModel model)
         {
-            if (repair.StartDate > repair.EndDate)
+            if (model.StartDate > model.EndDate)
             {
-                ModelState.AddModelError(nameof(repair.StartDate), "start date must be earlier then end date");
+                ModelState.AddModelError(nameof(model.StartDate), "start date must be earlier then end date");
             }
-            if (DateTime.Now.Date > repair.StartDate)
+            if (DateTime.Now.Date > model.StartDate)
             {
-                ModelState.AddModelError(nameof(repair.StartDate), "start date must not be in the past");
+                ModelState.AddModelError(nameof(model.StartDate), "start date must not be in the past");
             }
-
-            repair.CustomerId = id;
 
             if (ModelState.IsValid)
             {
-                jobsDb.Add(repair);
+                jobsDb.Add(new RepairJob()
+                {
+                    StartDate = model.StartDate,
+                    EndDate = model.EndDate,
+                    CustomerId = model.CustomerId,
+                    Status = RepairStatus.Pending,
+                    JobDescription = model.JobDescription
+                });
                 return RedirectToAction("Index");
             }
 
-            var ViewModel = new CreateJobViewModel()
-            {
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
-                ThisCustomer = customerDb.Get(id)
-            };
-            return View(ViewModel);
+            return View(model);
         }
     }
 }
