@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace RepairShop.Controllers
 {
-    public class HomeController : Controller
+    public class AdminHomeController : Controller
     {
         IRepairJobsData jobsDb;
         IEmployeesData employeeDb;
@@ -21,7 +21,7 @@ namespace RepairShop.Controllers
         IRepairJobsEmployeesData jobEmployeeDb;
         ApplicationUserManager _userManager;
 
-        public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
+        public AdminHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
     IRepairJobsEmployeesData jobEmployeeDb)
         {
             this.jobsDb = jobsDb;
@@ -30,7 +30,7 @@ namespace RepairShop.Controllers
             this.jobEmployeeDb = jobEmployeeDb;
         }
 
-        public HomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
+        public AdminHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
             IRepairJobsEmployeesData jobEmployeeDb, ApplicationUserManager userManager)
         {
             this.jobsDb = jobsDb;
@@ -57,7 +57,7 @@ namespace RepairShop.Controllers
             var repairJobs = jobsDb.GetAll().
                 Join(customerDb.GetAll(), r => r.CustomerId, c => c.Id, (r, c) => new { r, c }).
                 Join(UserManager.Users, rc => rc.c.UserId, u => u.Id,
-                (rc, u) => new QueryRepairJob
+                (rc, u) => new AdminQueryRepairJob
                 {
                     Id = rc.r.Id,
                     StartDate = rc.r.StartDate,
@@ -67,7 +67,7 @@ namespace RepairShop.Controllers
                     Status = rc.r.Status
                 });
 
-            var ViewModel = new HomeIndexViewModel()
+            var ViewModel = new AdminHomeIndexViewModel()
             {
                 RepairJobs = repairJobs,
                 RepairStatus = jobsDb.StatusAmounts(),
@@ -110,7 +110,7 @@ namespace RepairShop.Controllers
                 jobEmployeeDb.Add(jobEmployee);
             }
 
-            var model = new JobEditViewModel
+            var model = new AdminJobEditViewModel
             {
                Job = job,
                JobEmployee = jobEmployee
@@ -121,7 +121,7 @@ namespace RepairShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(JobEditViewModel model)
+        public ActionResult Edit(AdminJobEditViewModel model)
         {
             jobsDb.Update(model.Job);
             jobEmployeeDb.Update(model.JobEmployee);
@@ -132,7 +132,7 @@ namespace RepairShop.Controllers
         public ActionResult Details(int id)
         {
             var job = jobsDb.Get(id);
-            var viewModel = new HomeDetailsViewModel()
+            var viewModel = new AdminHomeDetailsViewModel()
             {
                 RepairJob = job,
                 Customer = customerDb.Get(job.CustomerId),
@@ -149,7 +149,7 @@ namespace RepairShop.Controllers
             if (customer == null)
                 return RedirectToAction("Index");
 
-            var ViewModel = new CreateJobViewModel()
+            var ViewModel = new AdminCreateJobViewModel()
             {
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
@@ -160,7 +160,7 @@ namespace RepairShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateJobViewModel model)
+        public ActionResult Create(AdminCreateJobViewModel model)
         {
             if (model.StartDate > model.EndDate)
             {
