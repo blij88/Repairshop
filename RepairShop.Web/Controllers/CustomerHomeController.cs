@@ -15,27 +15,20 @@ namespace RepairShop.Web.Controllers
     public class CustomerHomeController : Controller
     {
         IRepairJobsData jobsDb;
-        IEmployeesData employeeDb;
         ICustomersData customerDb;
-        IRepairJobsEmployeesData jobEmployeeDb;
         ApplicationUserManager _userManager;
 
-        public CustomerHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
-    IRepairJobsEmployeesData jobEmployeeDb)
+        public CustomerHomeController(IRepairJobsData jobsDb, ICustomersData customerDb)
         {
             this.jobsDb = jobsDb;
-            this.employeeDb = employeeDb;
             this.customerDb = customerDb;
-            this.jobEmployeeDb = jobEmployeeDb;
         }
 
         public CustomerHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
-            IRepairJobsEmployeesData jobEmployeeDb, ApplicationUserManager userManager)
+            ApplicationUserManager userManager)
         {
             this.jobsDb = jobsDb;
-            this.employeeDb = employeeDb;
             this.customerDb = customerDb;
-            this.jobEmployeeDb = jobEmployeeDb;
             UserManager = userManager;
         }
 
