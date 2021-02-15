@@ -16,6 +16,8 @@ namespace RepairShop.Web.ViewModels
         public string Phone { get; set; }
         [Required]
         public decimal HourlyCost { get; set; }
+        [Required]
+        public bool Admin { get; set; }
         
         public IEnumerable<string> Errors { get; set; }
     }

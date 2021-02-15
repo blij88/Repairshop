@@ -14,17 +14,17 @@ using System.Web.Mvc;
 
 namespace RepairShop.Controllers
 {
-    public class EmployeeController : Controller
+    public class AdminEmployeeController : Controller
     {
         IEmployeesData employeeDb;
         private ApplicationUserManager _userManager;
 
-        public EmployeeController(IEmployeesData employeeDb)
+        public AdminEmployeeController(IEmployeesData employeeDb)
         {
             this.employeeDb = employeeDb;
         }
 
-        public EmployeeController(IEmployeesData employeeDb, ApplicationUserManager userManager)
+        public AdminEmployeeController(IEmployeesData employeeDb, ApplicationUserManager userManager)
         {
             this.employeeDb = employeeDb;
             UserManager = userManager;
@@ -76,7 +76,7 @@ namespace RepairShop.Controllers
                 var result = await UserManager.CreateAsync(user, "1234Aa=");
                 if (result.Succeeded)
                 {
-                    employeeDb.Add(new Employee { HourlyCost = model.HourlyCost, UserId = user.Id});
+                    employeeDb.Add(new Employee { HourlyCost = model.HourlyCost, UserId = user.Id, Admin = model.Admin});
                     return RedirectToAction("Index");
                 }
 

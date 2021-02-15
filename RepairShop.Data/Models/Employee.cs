@@ -13,6 +13,9 @@ namespace RepairShop.Data.Models
 
         [Required]
         public decimal HourlyCost { get; set; }
+
+        [Required]
+        public bool Admin { get; set; }
         
         [Required]
         public string UserId { get; set; }

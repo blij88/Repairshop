@@ -204,7 +204,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminCustomerController.cs" />
     <Compile Include="Controllers\CustomerHomeController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\AdminEmployeeController.cs" />
     <Compile Include="Controllers\EmployeeHomeController.cs" />
     <Compile Include="Controllers\AdminHomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -277,9 +277,9 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\AdminEmployee\Index.cshtml" />
     <Content Include="Views\AdminCustomer\Index.cshtml" />
-    <Content Include="Views\Employee\Create.cshtml" />
+    <Content Include="Views\AdminEmployee\Create.cshtml" />
     <Content Include="Views\AdminHome\Create.cshtml" />
     <Content Include="Views\CustomerHome\Index.cshtml" />
     <Content Include="Views\CustomerHome\Edit.cshtml" />

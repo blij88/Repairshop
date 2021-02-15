@@ -87,9 +87,7 @@ namespace RepairShop.Controllers
         {
             var job = jobsDb.Get(id);
             if (job == null)
-            {
                 return HttpNotFound();
-            }
 
             var userId = User.Identity.GetUserId();
             var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
