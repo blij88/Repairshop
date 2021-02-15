@@ -59,7 +59,7 @@ namespace RepairShop.Controllers
         [HttpGet]
         public ActionResult RequestJob(int id)
         {
-            var ViewModel = new CreateJobViewModel()
+            var ViewModel = new AdminCreateJobViewModel()
             {
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
@@ -70,7 +70,7 @@ namespace RepairShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RequestJob(CreateJobViewModel model)
+        public ActionResult RequestJob(AdminCreateJobViewModel model)
         {
             if (model.StartDate > model.EndDate)
             {

@@ -147,7 +147,7 @@ namespace RepairShop.Web.Controllers
             if (customer == null)
                 return RedirectToAction("Index");
 
-            var ViewModel = new CreateJobViewModel()
+            var ViewModel = new CustomerCreateJobViewModel()
             {
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
@@ -158,7 +158,7 @@ namespace RepairShop.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateJobViewModel model)
+        public ActionResult Create(CustomerCreateJobViewModel model)
         {
             if (model.StartDate > model.EndDate)
             {
