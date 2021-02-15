@@ -11,6 +11,7 @@ namespace RepairShop.Data.Models
     {
         public int Id { get; set; }
 
+
         [Required]
         public string UserId { get; set; }
     }
