@@ -8,7 +8,7 @@ namespace RepairShop.Web.ViewModels
 {
     public class EmployeeHomeIndexViewModel
     {
-        public IEnumerable<QueryRepairJob> RepairJobs { get; set; }
+        public IEnumerable<EmployeeQueryRepairJob> RepairJobs { get; set; }
         public Dictionary<RepairStatus, int> RepairStatus { get; set; }
         public List<string> HeaderNames { get; set; }
         public IEnumerable<Customer> Customer { get; set; }

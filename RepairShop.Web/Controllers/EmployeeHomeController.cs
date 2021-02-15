@@ -65,7 +65,7 @@ namespace RepairShop.Controllers
                 Where(r => r.Status != RepairStatus.Done).
                 Join(customerDb.GetAll(), r => r.CustomerId, c => c.Id, (r, c) => new { r, c }).
                 Join(UserManager.Users, rc => rc.c.UserId, u => u.Id,
-                (rc, u) => new QueryRepairJob
+                (rc, u) => new EmployeeQueryRepairJob
                 {
                     Id = rc.r.Id,
                     StartDate = rc.r.StartDate,
@@ -75,7 +75,7 @@ namespace RepairShop.Controllers
                     Status = rc.r.Status
                 });
 
-            var ViewModel = new HomeIndexViewModel()
+            var ViewModel = new EmployeeHomeIndexViewModel()
             {
                 RepairJobs = repairJobs,
                 RepairStatus = jobsDb.StatusAmounts(),
@@ -111,7 +111,7 @@ namespace RepairShop.Controllers
                 jobEmployeeDb.Add(jobEmployee);
             }
 
-            var model = new JobEditViewModel
+            var model = new EmployeeJobEditViewModel
             {
                 Job = job,
                 JobEmployee = jobEmployee
@@ -122,7 +122,7 @@ namespace RepairShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(JobEditViewModel model)
+        public ActionResult Edit(EmployeeJobEditViewModel model)
         {
             jobsDb.Update(model.Job);
             jobEmployeeDb.Update(model.JobEmployee);
@@ -139,7 +139,7 @@ namespace RepairShop.Controllers
                 return HttpNotFound();
 
             var job = jobsDb.Get(id);
-            var viewModel = new HomeDetailsViewModel()
+            var viewModel = new EmployeeHomeDetailsViewModel()
             {
                 RepairJob = job,
                 Customer = customerDb.Get(job.CustomerId),
