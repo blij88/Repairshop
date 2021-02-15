@@ -11,19 +11,19 @@ using System.Web.Mvc;
 
 namespace RepairShop.Controllers
 {
-    public class CustomerController : Controller
+    public class AdminCustomerController : Controller
     {
         ICustomersData customerDb;
         IRepairJobsData jobsDb;
         ApplicationUserManager _userManager;
 
-        public CustomerController(ICustomersData customerDb, IRepairJobsData jobsDb)
+        public AdminCustomerController(ICustomersData customerDb, IRepairJobsData jobsDb)
         {
             this.customerDb = customerDb;
             this.jobsDb = jobsDb;
         }
 
-        public CustomerController(ICustomersData customerDb, IRepairJobsData jobsDb, ApplicationUserManager userManager)
+        public AdminCustomerController(ICustomersData customerDb, IRepairJobsData jobsDb, ApplicationUserManager userManager)
         {
             this.customerDb = customerDb;
             this.jobsDb = jobsDb;

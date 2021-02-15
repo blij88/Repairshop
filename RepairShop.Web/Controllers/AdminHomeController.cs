@@ -140,51 +140,5 @@ namespace RepairShop.Controllers
             };
             return View(viewModel);
         }
-
-        [HttpGet]
-        public ActionResult Create()
-        {
-            var userId = User.Identity.GetUserId();
-            var customer = customerDb.GetAll().FirstOrDefault(e => e.UserId == userId);
-            if (customer == null)
-                return RedirectToAction("Index");
-
-            var ViewModel = new AdminCreateJobViewModel()
-            {
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
-                CustomerId = customer.Id
-            };
-            return View(ViewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(AdminCreateJobViewModel model)
-        {
-            if (model.StartDate > model.EndDate)
-            {
-                ModelState.AddModelError(nameof(model.StartDate), "start date must be earlier then end date");
-            }
-            if (DateTime.Now.Date > model.StartDate)
-            {
-                ModelState.AddModelError(nameof(model.StartDate), "start date must not be in the past");
-            }
-
-            if (ModelState.IsValid)
-            {
-                jobsDb.Add(new RepairJob()
-                {
-                    StartDate = model.StartDate,
-                    EndDate = model.EndDate,
-                    CustomerId = model.CustomerId,
-                    Status = RepairStatus.Pending,
-                    JobDescription = model.JobDescription
-                });
-                return RedirectToAction("Index");
-            }
-
-            return View(model);
-        }
     }
 }

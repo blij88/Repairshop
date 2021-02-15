@@ -38,23 +38,4 @@ namespace RepairShop.Web.ViewModels
         public RepairJob Job { get; set; }
         public RepairJobEmployee JobEmployee { get; set; }
     }
-
-    public class AdminCreateJobViewModel
-    {
-        [DisplayName("Start Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime StartDate { get; set; }
-
-        [DisplayName("End date")]
-        [DataType(DataType.Date), Required]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime EndDate { get; set; }
-        public RepairStatus Status { get; set; }
-
-        [DisplayName("Description")]
-        public string JobDescription { get; set; }
-
-        public int CustomerId { get; set; }
-    }
 }

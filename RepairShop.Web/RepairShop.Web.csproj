@@ -202,7 +202,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\AdminCustomerController.cs" />
     <Compile Include="Controllers\CustomerHomeController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\EmployeeHomeController.cs" />
@@ -215,7 +215,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CreateEmployeeViewModel.cs" />
     <Compile Include="ViewModels\CustomerHomeViewModels.cs" />
-    <Compile Include="ViewModels\CustomerIndexViewModel.cs" />
+    <Compile Include="ViewModels\AdminCustomerViewModels.cs" />
     <Compile Include="ViewModels\EmployeeHomeViewModels.cs" />
     <Compile Include="ViewModels\EmployeeIndexViewModel.cs" />
     <Compile Include="ViewModels\AdminHomeViewModels.cs" />
@@ -256,7 +256,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\AdminHome\Index.cshtml" />
-    <Content Include="Views\Customer\RequestJob.cshtml" />
+    <Content Include="Views\AdminCustomer\RequestJob.cshtml" />
     <Content Include="Views\AdminHome\Edit.cshtml" />
     <Content Include="Views\AdminHome\Details.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -278,7 +278,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\AdminCustomer\Index.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\AdminHome\Create.cshtml" />
     <Content Include="Views\CustomerHome\Index.cshtml" />
