@@ -12,6 +12,10 @@ namespace RepairShop.Data.Models
         public int Id { get; set; }
 
         [Required]
-        public string UserId { get; set; }
+        public string Name { get; set; }
+        [Phone]
+        public string Phone { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
     }
 }
