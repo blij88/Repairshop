@@ -205,6 +205,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerHomeController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\EmployeeHomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -216,6 +217,7 @@
     <Compile Include="ViewModels\CreateJobViewModel.cs" />
     <Compile Include="ViewModels\CustomerHomeViewModels.cs" />
     <Compile Include="ViewModels\CustomerIndexViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeHomeViewModels.cs" />
     <Compile Include="ViewModels\EmployeeIndexViewModel.cs" />
     <Compile Include="ViewModels\HomeDetailsViewModel.cs" />
     <Compile Include="ViewModels\HomeIndexViewModel.cs" />
@@ -286,6 +288,9 @@
     <Content Include="Views\CustomerHome\Edit.cshtml" />
     <Content Include="Views\CustomerHome\Details.cshtml" />
     <Content Include="Views\CustomerHome\Create.cshtml" />
+    <Content Include="Views\EmployeeHome\Details.cshtml" />
+    <Content Include="Views\EmployeeHome\Edit.cshtml" />
+    <Content Include="Views\EmployeeHome\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
