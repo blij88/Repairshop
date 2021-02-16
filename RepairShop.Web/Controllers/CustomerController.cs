@@ -53,6 +53,7 @@ namespace RepairShop.Controllers
                     Phone = u.PhoneNumber,
                     Email = u.Email
                 });
+            ViewBag.Customer = 1;
             return View(model);
         }
 
