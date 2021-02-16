@@ -66,6 +66,10 @@ namespace RepairShop.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            // One first use, prompt to make an admin account.
+            if (!employeeDb.GetAll().Any(e => e.Admin))
+                return RedirectToAction("Setup");
+            
             if (User.Identity.GetUserId() != null)
                 return GoToUserHome();
             
@@ -102,6 +106,34 @@ namespace RepairShop.Web.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        [AllowAnonymous]
+        public ActionResult Setup()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Setup(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    employeeDb.Add(new Employee { UserId = user.Id, Admin = true, HourlyCost = 0 });
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    return GoToUserHome();
+                }
+                AddErrors(result);
+            }
+
+            return View(model);
         }
 
         private ActionResult GoToUserHome()

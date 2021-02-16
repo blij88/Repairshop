@@ -289,6 +289,7 @@
     <Content Include="Views\EmployeeHome\Edit.cshtml" />
     <Content Include="Views\EmployeeHome\Index.cshtml" />
     <Content Include="Views\AdminEmployee\Edit.cshtml" />
+    <Content Include="Views\Account\Setup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
