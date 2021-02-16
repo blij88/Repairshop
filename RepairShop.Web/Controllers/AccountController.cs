@@ -66,6 +66,9 @@ namespace RepairShop.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.GetUserId() != null)
+                return GoToUserHome();
+            
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -104,6 +107,11 @@ namespace RepairShop.Web.Controllers
         private ActionResult GoToUserHome()
         {
             var userId = User.Identity.GetUserId();
+            if (userId == null)
+               return RedirectToAction("Login");
+
+            System.Diagnostics.Debug.WriteLine(userId == "");
+
             var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
             if (employee != null)
             {
@@ -343,7 +351,7 @@ namespace RepairShop.Web.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         protected override void Dispose(bool disposing)
