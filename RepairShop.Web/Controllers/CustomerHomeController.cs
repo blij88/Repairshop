@@ -49,7 +49,7 @@ namespace RepairShop.Web.Controllers
             var userId = User.Identity.GetUserId();
             var customer = customerDb.GetAll().FirstOrDefault(e => e.UserId == userId);
             if (customer == null)
-                return HttpNotFound();
+                return RedirectToAction("Error");
 
             var repairJobs = jobsDb.GetAll().Where(r => r.CustomerId == customer.Id).
                 Select(r => new CustomerQueryRepairJob()
@@ -62,6 +62,11 @@ namespace RepairShop.Web.Controllers
                 });
 
             return View(repairJobs);
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
 
         [HttpGet]
