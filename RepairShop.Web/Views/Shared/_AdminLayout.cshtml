@@ -20,9 +20,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Request new repair", "Index", "Customer")</li>
+                    <li>@Html.ActionLink("Customer", "Index", "AdminCustomer")</li>
+                    <li>@Html.ActionLink("Employee", "Index", "AdminEmployee")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+				@Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
@@ -30,7 +31,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year Repairs</p>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 
