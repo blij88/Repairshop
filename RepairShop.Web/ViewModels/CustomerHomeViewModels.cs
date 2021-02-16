@@ -11,7 +11,9 @@ namespace RepairShop.Web.ViewModels
     public class CustomerQueryRepairJob
     {
         public int Id { get; set; }
+        [DisplayName("Start date")]
         public DateTime StartDate { get; set; }
+        [DisplayName("End Date")]
         public DateTime EndDate { get; set; }
         public bool HasStarted { get; set; }
         public RepairStatus Status { get; set; }
@@ -20,7 +22,9 @@ namespace RepairShop.Web.ViewModels
     public class CustomerHomeDetailsViewModel
     {
         public int Id { get; set; }
+        [DisplayName("start Date")]
         public DateTime StartDate { get; set; }
+        [DisplayName("End Date")]
         public DateTime EndDate { get; set; }
         public RepairStatus Status { get; set; }
         public bool HasStarted { get; set; }

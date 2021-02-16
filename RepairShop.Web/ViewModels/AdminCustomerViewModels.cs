@@ -12,7 +12,9 @@ namespace RepairShop.Web.ViewModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [Phone]
         public string Phone { get; set; }
+        [EmailAddress]
         public string Email { get; set; }
     }
 

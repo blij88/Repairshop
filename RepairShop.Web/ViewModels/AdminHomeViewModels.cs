@@ -2,28 +2,42 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace RepairShop.Web.ViewModels
 {
-    public class HomeIndexViewModel
+    public class AdminHomeIndexViewModel
     {
-        public IEnumerable<QueryRepairJob> RepairJobs { get; set; }
+        public IEnumerable<AdminQueryRepairJob> RepairJobs { get; set; }
         public Dictionary<RepairStatus, int> RepairStatus { get; set; }
         public List<string> HeaderNames { get; set; }
         public IEnumerable<Customer> Customer { get; set; }
     }
 
-    public class QueryRepairJob
+    public class AdminQueryRepairJob
     {
         public int Id { get; set; }
-        [DisplayName ("Start date")]
+        [DisplayName("Start Date")]
         public DateTime StartDate { get; set; }
-        [DisplayName ("End date")]
+        [DisplayName("End Date")]
         public DateTime EndDate { get; set; }
         public string Customer { get; set; }
         public bool IsLate { get; set; }
         public RepairStatus Status {get; set; }
+    }
+
+    public class AdminHomeDetailsViewModel
+    {
+        public RepairJob RepairJob { get; set; }
+        public Customer Customer { get; set; }
+        public decimal Price { get; set; }
+    }
+
+    public class AdminJobEditViewModel
+    {
+        public RepairJob Job { get; set; }
+        public RepairJobEmployee JobEmployee { get; set; }
     }
 }
