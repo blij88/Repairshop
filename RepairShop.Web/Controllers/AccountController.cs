@@ -20,18 +20,21 @@ namespace RepairShop.Web.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ICustomersData customerDb;
+        private IEmployeesData employeeDb;
 
-        public AccountController(ICustomersData customerDb)
+        public AccountController(ICustomersData customerDb, IEmployeesData employeeDb)
         {
             this.customerDb = customerDb;
+            this.employeeDb = employeeDb;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager,
-            ICustomersData customerDb )
+            ICustomersData customerDb, IEmployeesData employeeDb)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             this.customerDb = customerDb;
+            this.employeeDb = employeeDb;
         }
 
         public ApplicationSignInManager SignInManager
@@ -86,7 +89,7 @@ namespace RepairShop.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return GoToUserHome();
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -96,6 +99,25 @@ namespace RepairShop.Web.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        private ActionResult GoToUserHome()
+        {
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee != null)
+            {
+                if (employee.Admin)
+                    return RedirectToAction("Index", "AdminHome");
+
+                return RedirectToAction("Index", "EmployeeHome");
+            }
+
+            var customer = customerDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (customer != null)
+                return RedirectToAction("Index", "CustomerHome");
+
+            return HttpNotFound();
         }
 
         //
@@ -171,7 +193,7 @@ namespace RepairShop.Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return GoToUserHome();
                 }
                 AddErrors(result);
             }
