@@ -1,4 +1,4 @@
-﻿@model RepairShop.Web.ViewModels.CreateJobViewModel
+﻿@model RepairShop.Web.ViewModels.AdminCreateJobViewModel
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -15,7 +15,7 @@
 <div class="form-horizontal">
     <h4>RepairJob</h4>
     <div>
-        @Model.CustomerId
+        @Html.HiddenFor(model => model.CustomerId)
     </div>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
