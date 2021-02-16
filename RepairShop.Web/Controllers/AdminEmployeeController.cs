@@ -54,7 +54,8 @@ namespace RepairShop.Controllers
                    Name = u.UserName,
                    Email = u.Email,
                    Phone = u.PhoneNumber,
-                   HourlyCost = e.HourlyCost
+                   HourlyCost = e.HourlyCost,
+                   Admin = e.Admin
                });
 
             return View(model);
