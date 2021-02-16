@@ -7,6 +7,7 @@ namespace RepairShop.Web.ViewModels
     {
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
     }
 
@@ -43,6 +44,7 @@ namespace RepairShop.Web.ViewModels
     {
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
     }
 
