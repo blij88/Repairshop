@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using RepairShop.Data.Models;
 using RepairShop.Data.Services;
 using RepairShop.Web;
@@ -14,18 +15,22 @@ namespace RepairShop.Controllers
     public class AdminCustomerController : Controller
     {
         ICustomersData customerDb;
+        IEmployeesData employeeDb;
         IRepairJobsData jobsDb;
         ApplicationUserManager _userManager;
 
-        public AdminCustomerController(ICustomersData customerDb, IRepairJobsData jobsDb)
+        public AdminCustomerController(IEmployeesData employeeDb, ICustomersData customerDb, IRepairJobsData jobsDb)
         {
             this.customerDb = customerDb;
             this.jobsDb = jobsDb;
+            this.employeeDb = employeeDb;
         }
 
-        public AdminCustomerController(ICustomersData customerDb, IRepairJobsData jobsDb, ApplicationUserManager userManager)
+        public AdminCustomerController(IEmployeesData employeeDb, ICustomersData customerDb, IRepairJobsData jobsDb,
+            ApplicationUserManager userManager)
         {
             this.customerDb = customerDb;
+            this.employeeDb = employeeDb;
             this.jobsDb = jobsDb;
             UserManager = userManager;
         }
@@ -45,6 +50,12 @@ namespace RepairShop.Controllers
         // GET: Customer
         public ActionResult Index()
         {
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
+
             var model = customerDb.GetAll().Join(UserManager.Users, c => c.UserId, u => u.Id,
                 (c, u) => new CustomerIndexViewModel
                 {
@@ -59,6 +70,12 @@ namespace RepairShop.Controllers
         [HttpGet]
         public ActionResult RequestJob(int id)
         {
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
+
             var ViewModel = new AdminCreateJobViewModel()
             {
                 StartDate = DateTime.Now,

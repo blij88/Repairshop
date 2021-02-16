@@ -54,6 +54,12 @@ namespace RepairShop.Controllers
 
         public ActionResult Index()
         {
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
+
             var repairJobs = jobsDb.GetAll().
                 Join(customerDb.GetAll(), r => r.CustomerId, c => c.Id, (r, c) => new { r, c }).
                 Join(UserManager.Users, rc => rc.c.UserId, u => u.Id,
@@ -78,6 +84,12 @@ namespace RepairShop.Controllers
 
         public ActionResult Delete(int id)
         {
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
+
             jobsDb.Delete(id);
             return RedirectToAction("Index");
         }
@@ -85,16 +97,16 @@ namespace RepairShop.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            // Check if the request is valid.
             var job = jobsDb.Get(id);
             if (job == null)
                 return HttpNotFound();
 
+            // Only admins should see this view.
             var userId = User.Identity.GetUserId();
             var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
-
-            // TODO: Redirect to appropriate message.
-            if (employee == null)
-                return RedirectToAction("Index");
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
 
             var jobEmployee = jobEmployeeDb.Get(id, employee.Id);
             if (jobEmployee == null)
@@ -129,7 +141,17 @@ namespace RepairShop.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
+
+            // Check if the request is valid.
             var job = jobsDb.Get(id);
+            if (job == null)
+                return HttpNotFound();
+
             var viewModel = new AdminHomeDetailsViewModel()
             {
                 RepairJob = job,

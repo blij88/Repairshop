@@ -45,6 +45,11 @@ namespace RepairShop.Controllers
         // GET: Employee
         public ActionResult Index()
         {
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
 
             var model = employeeDb.GetAll().Join(UserManager.Users,
                e => e.UserId,
@@ -64,11 +69,12 @@ namespace RepairShop.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
-        }
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
 
-        public ActionResult Edit()
-        {
             return View();
         }
 
@@ -90,6 +96,17 @@ namespace RepairShop.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult Edit()
+        {
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
+
+            return View();
         }
     }
 }
