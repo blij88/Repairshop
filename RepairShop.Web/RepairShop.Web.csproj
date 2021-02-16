@@ -253,7 +253,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\AdminHome\Index.cshtml" />
     <Content Include="Views\AdminCustomer\RequestJob.cshtml" />
     <Content Include="Views\AdminHome\Edit.cshtml" />
@@ -289,6 +289,9 @@
     <Content Include="Views\EmployeeHome\Index.cshtml" />
     <Content Include="Views\AdminEmployee\Edit.cshtml" />
     <Content Include="Views\Account\Setup.cshtml" />
+    <Content Include="Views\Shared\_CustomerLayout.cshtml" />
+    <Content Include="Views\Shared\_EmployeeLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,7 +19,9 @@ namespace RepairShop.Web.ViewModels
     public class AdminQueryRepairJob
     {
         public int Id { get; set; }
+        [DisplayName("Start Date")]
         public DateTime StartDate { get; set; }
+        [DisplayName("End Date")]
         public DateTime EndDate { get; set; }
         public string Customer { get; set; }
         public bool IsLate { get; set; }

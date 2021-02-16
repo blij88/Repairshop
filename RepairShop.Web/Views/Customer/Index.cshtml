@@ -1,8 +1,19 @@
 ﻿@model IEnumerable<RepairShop.Web.ViewModels.CustomerIndexViewModel>
 
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "Overview";
+}
+@{
+
+    if (ViewBag.Customer == 1)
+    {
+        Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
 }
 
 <h2>Overview</h2>

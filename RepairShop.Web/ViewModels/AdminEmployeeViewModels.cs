@@ -21,7 +21,9 @@ namespace RepairShop.Web.ViewModels
         [Required]
         public string Name { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
+        [Phone]
         public string Phone { get; set; }
         [Required]
         public decimal HourlyCost { get; set; }

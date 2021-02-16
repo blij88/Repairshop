@@ -1,6 +1,7 @@
 ﻿@model RepairShop.Web.ViewModels.AdminHomeIndexViewModel
 
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "Index";
 }
 
@@ -23,19 +24,16 @@
     
     <tr>
         <th>
-            Id
+            @Html.DisplayNameFor(x => x.RepairJobs.First().Id)
         </th>
         <th>
-            Start date
+            @Html.DisplayNameFor(x => x.RepairJobs.First().StartDate)
         </th>
         <th>
-            End Date
+            @Html.DisplayNameFor(x => x.RepairJobs.First().EndDate)
         </th>
         <th>
-            Status
-        </th>
-        <th>
-            Customer
+            @Html.DisplayNameFor(x => x.RepairJobs.First().Status)
         </th>
         <th></th>
     </tr>
@@ -54,10 +52,6 @@
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.Status)
-    </td>
-
-    <td>
-        @Html.DisplayFor(modelItem => item.Customer)
     </td>
     <td>
         @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "late-link" })  |

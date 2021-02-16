@@ -140,7 +140,7 @@ namespace RepairShop.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             if (userId == null)
-               return RedirectToAction("Login");
+                return RedirectToAction("Login");
 
             var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
             if (employee != null)
@@ -152,8 +152,9 @@ namespace RepairShop.Web.Controllers
             }
 
             var customer = customerDb.GetAll().FirstOrDefault(e => e.UserId == userId);
-            if (customer != null)
+            if (customer != null) 
                 return RedirectToAction("Index", "CustomerHome");
+            System.Diagnostics.Debug.WriteLine(userId);
 
             return HttpNotFound();
         }
