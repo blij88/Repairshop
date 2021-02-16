@@ -37,9 +37,6 @@ namespace RepairShop.Data.Models
         [DisplayName("Repair notes")]
         public string RepairNotes { get; set; }
 
-        // Dictionary with keys corresponding to PartId and values corresponding to amount of that part.
-        public Dictionary<int, int> RequiredParts = new Dictionary<int, int>();
-
         public bool IsLate
         {
             get

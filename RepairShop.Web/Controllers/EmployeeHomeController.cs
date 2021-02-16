@@ -18,25 +18,32 @@ namespace RepairShop.Controllers
         IRepairJobsData jobsDb;
         IEmployeesData employeeDb;
         ICustomersData customerDb;
+        IPartsData partDb;
         IRepairJobsEmployeesData jobEmployeeDb;
+        IRepairJobsPartsData jobPartDb;
         ApplicationUserManager _userManager;
 
         public EmployeeHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
-    IRepairJobsEmployeesData jobEmployeeDb)
+            IPartsData partDb, IRepairJobsEmployeesData jobEmployeeDb, IRepairJobsPartsData jobPartDb)
         {
             this.jobsDb = jobsDb;
             this.employeeDb = employeeDb;
             this.customerDb = customerDb;
+            this.partDb = partDb;
             this.jobEmployeeDb = jobEmployeeDb;
+            this.jobPartDb = jobPartDb;
         }
 
         public EmployeeHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
-            IRepairJobsEmployeesData jobEmployeeDb, ApplicationUserManager userManager)
+            IPartsData partDb, IRepairJobsEmployeesData jobEmployeeDb, IRepairJobsPartsData jobPartDb,
+            ApplicationUserManager userManager)
         {
             this.jobsDb = jobsDb;
             this.employeeDb = employeeDb;
             this.customerDb = customerDb;
+            this.partDb = partDb;
             this.jobEmployeeDb = jobEmployeeDb;
+            this.jobPartDb = jobPartDb;
             UserManager = userManager;
         }
 
@@ -87,11 +94,10 @@ namespace RepairShop.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            // Check if this is a valid request.
             var job = jobsDb.Get(id);
             if (job == null)
-            {
                 return HttpNotFound();
-            }
 
             // This page should only be accessible to employees.
             var userId = User.Identity.GetUserId();
@@ -99,6 +105,7 @@ namespace RepairShop.Controllers
             if (employee == null)
                 return HttpNotFound();
 
+            // Get data for number of hours worked by this employee.
             var jobEmployee = jobEmployeeDb.Get(id, employee.Id);
             if (jobEmployee == null)
             {
@@ -111,10 +118,22 @@ namespace RepairShop.Controllers
                 jobEmployeeDb.Add(jobEmployee);
             }
 
+            // Get data for parts used for this job.
+            var jobParts = jobPartDb.GetAll().Where(jp => jp.RepairJobId == id).
+                Join(partDb.GetAll(), jp => jp.PartId, p => p.Id,
+                (jp, p) => new EmployeeQueryPart
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Amount = jp.NumberUsed,
+                    InStock = jp.NumberUsed <= p.AmountInStore
+                });
+
             var model = new EmployeeJobEditViewModel
             {
                 Job = job,
-                JobEmployee = jobEmployee
+                JobEmployee = jobEmployee,
+                Parts = jobParts
             };
 
             return View(model);

@@ -24,7 +24,7 @@ namespace RepairShop.Web.Controllers
             this.customerDb = customerDb;
         }
 
-        public CustomerHomeController(IRepairJobsData jobsDb, IEmployeesData employeeDb, ICustomersData customerDb,
+        public CustomerHomeController(IRepairJobsData jobsDb, ICustomersData customerDb,
             ApplicationUserManager userManager)
         {
             this.jobsDb = jobsDb;

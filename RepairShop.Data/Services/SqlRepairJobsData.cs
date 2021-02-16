@@ -75,10 +75,10 @@ namespace RepairShop.Data.Services
             }
 
             decimal materialCost = 0M;
-            foreach (var kvp in job.RequiredParts)
+            foreach (var rjp in db.RepairJobsParts.Where(r => r.RepairJobId == id))
             {
-                var part = db.Parts.FirstOrDefault(p => p.Id == kvp.Key);
-                materialCost += part.UnitCost * kvp.Value;
+                var part = db.Parts.Find(rjp.PartId);
+                materialCost += part.UnitCost * rjp.NumberUsed;
             }
 
             return wageCost + materialCost;

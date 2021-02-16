@@ -31,6 +31,15 @@ namespace RepairShop.Web.ViewModels
     {
         public RepairJob Job { get; set; }
         public RepairJobEmployee JobEmployee { get; set; }
+        public IEnumerable<EmployeeQueryPart> Parts { get; set; }
+    }
+
+    public class EmployeeQueryPart
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Amount { get; set; }
+        public bool InStock { get; set; }
     }
 
     public class EmployeeHomeDetailsViewModel
