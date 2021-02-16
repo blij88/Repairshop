@@ -110,8 +110,6 @@ namespace RepairShop.Web.Controllers
             if (userId == null)
                return RedirectToAction("Login");
 
-            System.Diagnostics.Debug.WriteLine(userId == "");
-
             var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
             if (employee != null)
             {
