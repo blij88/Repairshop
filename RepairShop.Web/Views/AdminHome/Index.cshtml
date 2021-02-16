@@ -7,10 +7,10 @@
 
 
 <table class="table-condensed" width="100%">
-    <tr width="25%">
+    <tr>
         @foreach (var item in Model.RepairStatus)
         {
-            <td>
+            <td width="25%">
                 @item.Key: @item.Value
             </td>
         }
