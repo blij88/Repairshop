@@ -16,6 +16,7 @@ namespace RepairShop.Web
             builder.RegisterType<SqlCustomersData>().As<ICustomersData>().InstancePerRequest();
             builder.RegisterType<SqlEmployeesData>().As<IEmployeesData>().InstancePerRequest();
             builder.RegisterType<SqlRepairJobsEmployeesData>().As<IRepairJobsEmployeesData>().InstancePerRequest();
+            builder.RegisterType<SqlRepairJobsPartsData>().As<IRepairJobsPartsData>().InstancePerRequest();
             builder.RegisterType<RepairShopDbContext>().InstancePerRequest();
 
             var container = builder.Build();
