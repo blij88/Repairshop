@@ -108,7 +108,7 @@ namespace RepairShop.Controllers
                     Status = RepairStatus.Pending,
                     JobDescription = model.JobDescription
                 });
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","AdminHome");
             }
 
             return View(model);
