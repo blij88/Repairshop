@@ -1,0 +1,52 @@
+﻿@model IEnumerable<RepairShop.Data.Models.Part>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table ">
+
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Cost per unit
+        </th>
+        <th>
+            Units in stock
+        </th>
+        <th>
+            Units in backorder
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr class="">
+    <td>
+        @Html.DisplayFor(Model => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UnitCost)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AmountInStore)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AmountInBackOrder)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "late-link" }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "late-link" }) |
+    </td>
+</tr>
+    }
+
+</table>

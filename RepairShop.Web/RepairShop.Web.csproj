@@ -203,6 +203,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminCustomerController.cs" />
+    <Compile Include="Controllers\AdminPartController.cs" />
     <Compile Include="Controllers\CustomerHomeController.cs" />
     <Compile Include="Controllers\AdminEmployeeController.cs" />
     <Compile Include="Controllers\EmployeeHomeController.cs" />
@@ -213,6 +214,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AdminPartViewModels.cs" />
     <Compile Include="ViewModels\CustomerHomeViewModels.cs" />
     <Compile Include="ViewModels\AdminCustomerViewModels.cs" />
     <Compile Include="ViewModels\EmployeeHomeViewModels.cs" />
@@ -293,6 +295,9 @@
     <Content Include="Views\Shared\_EmployeeLayout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\EmployeeHome\AddPartToJob.cshtml" />
+    <Content Include="Views\AdminPart\Index.cshtml" />
+    <Content Include="Views\AdminPart\Create.cshtml" />
+    <Content Include="Views\AdminPart\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
