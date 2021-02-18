@@ -166,5 +166,47 @@ namespace RepairShop.Controllers
             };
             return View(viewModel);
         }
+
+        [HttpGet]
+        public ActionResult AddPartToJob(int id)
+        {
+            // This page should only be accessible to employees.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null)
+                return HttpNotFound();
+
+            var model = new EmployeeAddPartViewModel()
+            {
+                EmployeeId = employee.Id,
+                JobId = id,
+                AllParts = partDb.GetAll().
+                    Select(p => new EmployeeQueryPart()
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                    })
+            };
+
+           return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddPartToJob(EmployeeAddPartViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                jobPartDb.Add(new RepairJobPart()
+                {
+                    RepairJobId = model.JobId,
+                    PartId = model.PartId,
+                    EmployeeId = model.EmployeeId,
+                    NumberUsed = model.Amount
+                });
+                return RedirectToAction("Edit");
+            }
+
+            return View(model);
+        }
     }
 }

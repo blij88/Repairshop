@@ -48,4 +48,13 @@ namespace RepairShop.Web.ViewModels
         public Customer Customer { get; set; }
         public decimal Price { get; set; }
     }
+
+    public class EmployeeAddPartViewModel
+    {
+        public int PartId { get; set; }
+        public int EmployeeId { get; set; }
+        public int JobId { get; set; }
+        public int Amount { get; set; }
+        public IEnumerable<EmployeeQueryPart> AllParts { get; set; }
+    }
 }
