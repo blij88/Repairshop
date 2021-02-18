@@ -7,6 +7,7 @@ using RepairShop.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -109,6 +110,38 @@ namespace RepairShop.Controllers
                     JobDescription = model.JobDescription
                 });
                 return RedirectToAction("Index","AdminHome");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult register()
+        {
+            // Only admins should be able to see this.
+            var userId = User.Identity.GetUserId();
+            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
+            if (employee == null || !employee.Admin)
+                return HttpNotFound();
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(CreateEmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Name, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, "1234Aa=");
+                if (result.Succeeded)
+                {
+                    customerDb.Add(new Customer { UserId = user.Id, });
+                    return RedirectToAction("Index");
+                }
+
+                model.Errors = result.Errors;
             }
 
             return View(model);
