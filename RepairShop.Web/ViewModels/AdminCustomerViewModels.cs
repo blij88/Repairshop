@@ -36,4 +36,17 @@ namespace RepairShop.Web.ViewModels
 
         public int CustomerId { get; set; }
     }
+
+    public class RegisterCustomerViewModel
+    {
+            [Required]
+            public string UserName { get; set; }
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+            [Phone]
+            public string Phone { get; set; }
+
+            public IEnumerable<string> Errors { get; set; }
+    }
 }

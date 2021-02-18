@@ -121,14 +121,14 @@ namespace RepairShop.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Name, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     employeeDb.Add(new Employee { UserId = user.Id, Admin = true, HourlyCost = 0 });
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    return GoToUserHome();
+                    return RedirectToAction("GoToUserHome");
                 }
                 AddErrors(result);
             }
@@ -136,7 +136,7 @@ namespace RepairShop.Web.Controllers
             return View(model);
         }
 
-        private ActionResult GoToUserHome()
+        public ActionResult GoToUserHome()
         {
             var userId = User.Identity.GetUserId();
             if (userId == null)

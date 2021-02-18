@@ -84,11 +84,11 @@ namespace RepairShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Name, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Name, Email = model.Email , PhoneNumber = model.Phone};
                 var result = await UserManager.CreateAsync(user, "1234Aa=");
                 if (result.Succeeded)
                 {
-                    employeeDb.Add(new Employee { HourlyCost = model.HourlyCost, UserId = user.Id, Admin = model.Admin});
+                    employeeDb.Add(new Employee { HourlyCost = model.HourlyCost, UserId = user.Id, Admin = model.Admin,});
                     return RedirectToAction("Index");
                 }
 
