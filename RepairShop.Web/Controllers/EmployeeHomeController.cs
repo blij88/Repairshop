@@ -192,6 +192,7 @@ namespace RepairShop.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddPartToJob(EmployeeAddPartViewModel model)
         {
             if (ModelState.IsValid)
@@ -203,7 +204,7 @@ namespace RepairShop.Controllers
                     EmployeeId = model.EmployeeId,
                     NumberUsed = model.Amount
                 });
-                return RedirectToAction("Edit");
+                return RedirectToAction("Edit",  new { id = model.JobId });
             }
 
             return View(model);

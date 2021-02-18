@@ -86,7 +86,7 @@
     }
 
     <div>
-        @Html.ActionLink("Add part", "AddPartToJob", Model.Job.Id)
+        @Html.ActionLink("Add part", "AddPartToJob", new { id = Model.Job.Id }, new { @class = "late-link" })
     </div>
 
     <div class="form-group">
