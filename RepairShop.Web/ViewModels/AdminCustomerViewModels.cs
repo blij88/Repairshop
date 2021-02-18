@@ -39,11 +39,8 @@ namespace RepairShop.Web.ViewModels
 
     public class RegisterCustomerViewModel
     {
-
-        public class CreateEmployeeViewModel
-        {
             [Required]
-            public string Name { get; set; }
+            public string UserName { get; set; }
             [Required]
             [EmailAddress]
             public string Email { get; set; }
@@ -51,6 +48,5 @@ namespace RepairShop.Web.ViewModels
             public string Phone { get; set; }
 
             public IEnumerable<string> Errors { get; set; }
-        }
     }
 }

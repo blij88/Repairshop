@@ -55,7 +55,11 @@ namespace RepairShop.Controllers
             var userId = User.Identity.GetUserId();
             var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
             if (employee == null || !employee.Admin)
+            {
+                System.Diagnostics.Debug.WriteLine(employee.UserId);
                 return HttpNotFound();
+
+            }
 
             var model = customerDb.GetAll().Join(UserManager.Users, c => c.UserId, u => u.Id,
                 (c, u) => new CustomerIndexViewModel
@@ -115,7 +119,7 @@ namespace RepairShop.Controllers
             return View(model);
         }
 
-        public ActionResult register()
+        public ActionResult Register()
         {
             // Only admins should be able to see this.
             var userId = User.Identity.GetUserId();
@@ -129,12 +133,12 @@ namespace RepairShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateEmployeeViewModel model)
+        public async Task<ActionResult> Register(RegisterCustomerViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Name, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, "1234Aa=");
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PhoneNumber = model.Phone};
+                var result = await UserManager.CreateAsync(user, "Welkom1!");
                 if (result.Succeeded)
                 {
                     customerDb.Add(new Customer { UserId = user.Id, });
