@@ -68,14 +68,14 @@ namespace RepairShop.Data.Services
             var job = Get(id);
 
             decimal wageCost = 0M;
-            foreach (var rje in db.RepairJobsEmployees.Where(r => r.RepairJobId == id))
+            foreach (var rje in db.RepairJobsEmployees.Where(r => r.RepairJobId == id).ToArray())
             {
                 var employee = db.Employees.Find(rje.EmployeeId);
                 wageCost += employee.HourlyCost * rje.HoursWorked;
             }
 
             decimal materialCost = 0M;
-            foreach (var rjp in db.RepairJobsParts.Where(r => r.RepairJobId == id))
+            foreach (var rjp in db.RepairJobsParts.Where(r => r.RepairJobId == id).ToArray())
             {
                 var part = db.Parts.Find(rjp.PartId);
                 materialCost += part.UnitCost * rjp.NumberUsed;

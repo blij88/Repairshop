@@ -123,11 +123,12 @@ namespace RepairShop.Controllers
                 Join(partDb.GetAll(), jp => jp.PartId, p => p.Id,
                 (jp, p) => new EmployeeQueryPart
                 {
-                    Id = p.Id,
+                    Id = jp.Id,
+                    PartId = p.Id,
                     Name = p.Name,
                     Amount = jp.NumberUsed,
                     InStock = jp.NumberUsed <= p.AmountInStore
-                });
+                }).ToArray();
 
             var model = new EmployeeJobEditViewModel
             {
@@ -145,6 +146,21 @@ namespace RepairShop.Controllers
         {
             jobsDb.Update(model.Job);
             jobEmployeeDb.Update(model.JobEmployee);
+            
+            foreach (var part in model.Parts)
+            {
+                jobPartDb.Update(new RepairJobPart()
+                {
+                    Id = part.Id,
+                    PartId = part.PartId,
+                    RepairJobId = model.Job.Id,
+                    EmployeeId = model.JobEmployee.EmployeeId,
+                    NumberUsed = part.Amount
+                });
+            }
+            if (Request.Form["update"] != null)
+                return RedirectToAction("Edit", model.Job.Id);
+
             return RedirectToAction("Index");
         }
 
@@ -183,9 +199,10 @@ namespace RepairShop.Controllers
                 AllParts = partDb.GetAll().
                     Select(p => new EmployeeQueryPart()
                     {
-                        Id = p.Id,
-                        Name = p.Name,
-                    })
+                        PartId = p.Id,
+                        Name = p.Name
+                    }),
+                Amount = 1
             };
 
            return View(model);

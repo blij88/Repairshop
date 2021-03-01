@@ -21,7 +21,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PartId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.PartId, new SelectList(Model.AllParts, "Id", "Name", "Select a part"))
+                @Html.DropDownListFor(model => model.PartId, new SelectList(Model.AllParts, "PartId", "Name", "Select a part"))
                 @Html.ValidationMessageFor(model => model.PartId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Amount, new { type = "number", @class = "form-control", min = "1" })
                 @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,5 +43,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Repair Job", "Edit", new { id = Model.JobId })
 </div>

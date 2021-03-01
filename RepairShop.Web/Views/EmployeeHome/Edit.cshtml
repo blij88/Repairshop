@@ -21,6 +21,8 @@
     @Html.HiddenFor(model => model.JobEmployee.Id)
     @Html.HiddenFor(model => model.JobEmployee.EmployeeId)
     @Html.HiddenFor(model => model.JobEmployee.RepairJobId)
+    @Html.HiddenFor(model => model.Job.StartDate)
+    @Html.HiddenFor(model => model.Job.EndDate)
 
 
     <div class="form-group">
@@ -68,26 +70,42 @@
         </div>
     </div>
 
-    @foreach (var part in Model.Parts)
-    {
-        <div class="form-group">
-            @Html.LabelFor(model => part.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => part.Name)
-            </div>
-        </div>
+    <h3>
+        @Html.LabelFor(model => model.Parts, htmlAttributes: new { @class = "control-label col-md-2" })
+    </h3>
+    <table class="table ">
 
-        <div class="form-group">
-            @Html.LabelFor(model => part.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => part.Amount)
-            </div>
-        </div>
-    }
+        <tr>
+            <th>
+                @Html.DisplayNameFor(x => x.Parts.First().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x => x.Parts.First().Amount)
+            </th>
+            <th></th>
+        </tr>
 
-    <div>
-        @Html.ActionLink("Add part", "AddPartToJob", new { id = Model.Job.Id }, new { @class = "late-link" })
-    </div>
+        @for (int i = 0; i < Model.Parts.Length; i++)
+        {
+            <tr class="@(!Model.Parts[i].InStock ? "late-colors" : "")">
+                <td>
+                    @Html.Label(Model.Parts[i].Name)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Parts[i].Amount, new { type = "number", @class = "form-control", min = "1" })
+                </td>
+                <td>
+                    @Html.ActionLink("Remove", "PartDelete", new { id = Model.Parts[i].Id }, new { @class = "late-link" })  |
+                    <input type="submit" value="Update" name="update" class="btn btn-default" /> |
+                </td>
+            </tr>
+            @Html.HiddenFor(model => model.Parts[i].PartId)
+            @Html.HiddenFor(model => model.Parts[i].Id)
+            @Html.HiddenFor(model => model.Parts[i].Name)
+        }
+
+    </table>
+    @Html.ActionLink("Add part", "AddPartToJob", new { id = Model.Job.Id }, new { @class = "btn btn-default" })
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -95,8 +113,8 @@
         </div>
     </div>
 </div>
-}
+    }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>

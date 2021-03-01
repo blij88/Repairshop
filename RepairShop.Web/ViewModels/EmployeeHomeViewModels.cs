@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -31,13 +32,17 @@ namespace RepairShop.Web.ViewModels
     {
         public RepairJob Job { get; set; }
         public RepairJobEmployee JobEmployee { get; set; }
-        public IEnumerable<EmployeeQueryPart> Parts { get; set; }
+        public EmployeeQueryPart[] Parts { get; set; }
     }
 
     public class EmployeeQueryPart
     {
         public int Id { get; set; }
+        public int PartId { get; set; }
         public string Name { get; set; }
+
+        [Range(1, int.MaxValue)]
+        [DefaultValue(1)]
         public int Amount { get; set; }
         public bool InStock { get; set; }
     }
