@@ -198,16 +198,19 @@ namespace RepairShop.Controllers
             if (employee == null)
                 return HttpNotFound();
 
+            var jobParts = jobPartDb.GetAll().ToArray();
+            var allParts = partDb.GetAll().Where(p => !jobParts.Any(jp => jp.PartId == p.Id && jp.RepairJobId == id)).
+                Select(p => new EmployeeQueryPart()
+                {
+                    PartId = p.Id,
+                    Name = p.Name
+                }).ToArray();
+
             var model = new EmployeeAddPartViewModel()
             {
                 EmployeeId = employee.Id,
                 JobId = id,
-                AllParts = partDb.GetAll().
-                    Select(p => new EmployeeQueryPart()
-                    {
-                        PartId = p.Id,
-                        Name = p.Name
-                    }),
+                AllParts = allParts,
                 Amount = 1
             };
 
