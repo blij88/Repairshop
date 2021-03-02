@@ -134,7 +134,7 @@ namespace RepairShop.Controllers
             {
                 Job = job,
                 JobEmployee = jobEmployee,
-                Parts = jobParts
+                Parts = jobParts,
             };
 
             return View(model);
@@ -144,8 +144,18 @@ namespace RepairShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EmployeeJobEditViewModel model)
         {
-            jobsDb.Update(model.Job);
             jobEmployeeDb.Update(model.JobEmployee);
+
+            if (model.Parts.Any(p => p.Amount > partDb.Get(p.PartId).AmountInStore))
+                model.Job.Status = RepairStatus.WaitingForComponents;
+            else if (Request.Form["Done"] != null)
+                model.Job.Status = RepairStatus.Done;
+            else if (jobEmployeeDb.GetAll().Any(je => je.RepairJobId == model.Job.Id && je.HoursWorked > 0))
+                model.Job.Status = RepairStatus.InProgress;
+            else
+                model.Job.Status = RepairStatus.Pending;
+            
+            jobsDb.Update(model.Job);
             
             foreach (var part in model.Parts)
             {
@@ -163,6 +173,7 @@ namespace RepairShop.Controllers
                     });
                 }
             }
+
             if (Request.Form["update"] != null)
                 return RedirectToAction("Edit", model.Job.Id);
 
@@ -198,6 +209,7 @@ namespace RepairShop.Controllers
             if (employee == null)
                 return HttpNotFound();
 
+            // Only show parts that are not already used for this job.
             var jobParts = jobPartDb.GetAll().ToArray();
             var allParts = partDb.GetAll().Where(p => !jobParts.Any(jp => jp.PartId == p.Id && jp.RepairJobId == id)).
                 Select(p => new EmployeeQueryPart()
