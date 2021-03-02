@@ -286,7 +286,6 @@
     <Content Include="Views\CustomerHome\Edit.cshtml" />
     <Content Include="Views\CustomerHome\Details.cshtml" />
     <Content Include="Views\CustomerHome\Create.cshtml" />
-    <Content Include="Views\EmployeeHome\Details.cshtml" />
     <Content Include="Views\EmployeeHome\Edit.cshtml" />
     <Content Include="Views\EmployeeHome\Index.cshtml" />
     <Content Include="Views\AdminEmployee\Edit.cshtml" />

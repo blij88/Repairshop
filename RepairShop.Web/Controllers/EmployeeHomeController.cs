@@ -181,25 +181,6 @@ namespace RepairShop.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(int id)
-        {
-            // This page should only be accessible to employees.
-            var userId = User.Identity.GetUserId();
-            var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
-            if (employee == null)
-                return HttpNotFound();
-
-            var job = jobsDb.Get(id);
-            var viewModel = new EmployeeHomeDetailsViewModel()
-            {
-                RepairJob = job,
-                Customer = customerDb.Get(job.CustomerId),
-                Price = jobsDb.GetPrice(id)
-            };
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [ChildActionOnly]
         public ActionResult AddPartToJob(int id)
         {
