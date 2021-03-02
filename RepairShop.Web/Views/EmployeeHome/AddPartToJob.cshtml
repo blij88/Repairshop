@@ -1,47 +1,23 @@
 ﻿@model RepairShop.Web.ViewModels.EmployeeAddPartViewModel
 
-@{
-    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
-    ViewBag.Title = "Add Part";
-}
-
-<h2>View</h2>
-
 @using (Html.BeginForm()) 
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>RepairJobPart</h4>
-        <hr />
-        @Html.HiddenFor(model => model.JobId)
-        @Html.HiddenFor(model => model.EmployeeId)
+    @Html.HiddenFor(model => model.JobId)
+    @Html.HiddenFor(model => model.EmployeeId)
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.PartId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.PartId, new SelectList(Model.AllParts, "PartId", "Name", "Select a part"))
-                @Html.ValidationMessageFor(model => model.PartId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Amount, new { type = "number", @class = "form-control", min = "1" })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+    <tr>
+        <td>
+            @Html.DropDownListFor(model => model.PartId, new SelectList(Model.AllParts, "PartId", "Name", "Select a part"))
+            @Html.ValidationMessageFor(model => model.PartId, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.Amount, new { type = "number", @class = "form-control", min = "1" })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            <input type="submit" value="Add part" name="save" class="btn btn-default" formaction=@Url.Action("AddPartToJob") formmethod="post" />
+        </td>
+    </tr>
 }
-
-<div>
-    @Html.ActionLink("Back to Repair Job", "Edit", new { id = Model.JobId })
-</div>

@@ -149,14 +149,19 @@ namespace RepairShop.Controllers
             
             foreach (var part in model.Parts)
             {
-                jobPartDb.Update(new RepairJobPart()
+                if (part.Amount == 0)
+                    jobPartDb.Delete(part.Id);
+                else
                 {
-                    Id = part.Id,
-                    PartId = part.PartId,
-                    RepairJobId = model.Job.Id,
-                    EmployeeId = model.JobEmployee.EmployeeId,
-                    NumberUsed = part.Amount
-                });
+                    jobPartDb.Update(new RepairJobPart()
+                    {
+                        Id = part.Id,
+                        PartId = part.PartId,
+                        RepairJobId = model.Job.Id,
+                        EmployeeId = model.JobEmployee.EmployeeId,
+                        NumberUsed = part.Amount
+                    });
+                }
             }
             if (Request.Form["update"] != null)
                 return RedirectToAction("Edit", model.Job.Id);
@@ -184,6 +189,7 @@ namespace RepairShop.Controllers
         }
 
         [HttpGet]
+        [ChildActionOnly]
         public ActionResult AddPartToJob(int id)
         {
             // This page should only be accessible to employees.
@@ -205,7 +211,7 @@ namespace RepairShop.Controllers
                 Amount = 1
             };
 
-           return View(model);
+           return PartialView(model);
         }
 
         [HttpPost]
@@ -224,7 +230,7 @@ namespace RepairShop.Controllers
                 return RedirectToAction("Edit",  new { id = model.JobId });
             }
 
-            return View(model);
+            return PartialView(model);
         }
     }
 }

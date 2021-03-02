@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>RepairJob</h4>
     <hr />
@@ -73,7 +73,7 @@
     <h3>
         @Html.LabelFor(model => model.Parts, htmlAttributes: new { @class = "control-label col-md-2" })
     </h3>
-    <table class="table ">
+    <table class="table">
 
         <tr>
             <th>
@@ -92,11 +92,10 @@
                     @Html.Label(Model.Parts[i].Name)
                 </td>
                 <td>
-                    @Html.TextBoxFor(model => model.Parts[i].Amount, new { type = "number", @class = "form-control", min = "1" })
+                    @Html.TextBoxFor(model => model.Parts[i].Amount, new { type = "number", @class = "form-control", min = "0" })
                 </td>
                 <td>
-                    @Html.ActionLink("Remove", "PartDelete", new { id = Model.Parts[i].Id }, new { @class = "late-link" })  |
-                    <input type="submit" value="Update" name="update" class="btn btn-default" /> |
+                    <input type="submit" value="Update" name="update" class="btn btn-default" />
                 </td>
             </tr>
             @Html.HiddenFor(model => model.Parts[i].PartId)
@@ -104,8 +103,8 @@
             @Html.HiddenFor(model => model.Parts[i].Name)
         }
 
+        @{ Html.RenderAction("AddPartToJob", new { id = Model.Job.Id }); }
     </table>
-    @Html.ActionLink("Add part", "AddPartToJob", new { id = Model.Job.Id }, new { @class = "btn btn-default" })
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
