@@ -40,13 +40,33 @@ namespace RepairShop.Web.ViewModels
     public class RegisterCustomerViewModel
     {
             [Required]
+            [MaxLength(24)]
             public string UserName { get; set; }
             [Required]
             [EmailAddress]
+            [MaxLength(50)]
             public string Email { get; set; }
             [Phone]
+            [MaxLength(25)]
             public string Phone { get; set; }
 
             public IEnumerable<string> Errors { get; set; }
+    }
+
+    public class EditCustomerViewModel
+    {
+        [Required]
+        public int Id { get; set; }
+        [Required]
+        [MaxLength(24)]
+        public string UserName { get; set; }
+        [Required]
+        [EmailAddress]
+        [MaxLength(50)]
+        public string Email { get; set; }
+        [Phone]
+        [MaxLength(20)]
+        public string Phone { get; set; }
+
     }
 }

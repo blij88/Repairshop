@@ -31,7 +31,7 @@ namespace RepairShop.Web.ViewModels
     public class AdminHomeDetailsViewModel
     {
         public RepairJob RepairJob { get; set; }
-        public Customer Customer { get; set; }
+        public ApplicationUser Customer { get; set; }
         public decimal Price { get; set; }
     }
 

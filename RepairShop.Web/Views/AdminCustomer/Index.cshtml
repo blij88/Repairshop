@@ -8,7 +8,7 @@
 <h2>Overview</h2>
 
 <p>
-    @Html.ActionLink("Create New", "register")
+    @Html.ActionLink("Register new user", "register")
 </p>
 <table class="table">
     <tr>
@@ -44,7 +44,6 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
                 @Html.ActionLink("Request job", "RequestJob", new { id = item.Id })
             </td>

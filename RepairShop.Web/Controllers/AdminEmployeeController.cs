@@ -60,7 +60,8 @@ namespace RepairShop.Controllers
                    Email = u.Email,
                    Phone = u.PhoneNumber,
                    HourlyCost = e.HourlyCost,
-                   Admin = e.Admin
+                   Admin = e.Admin,
+                   Id = e.Id
                });
 
             return View(model);
@@ -74,7 +75,6 @@ namespace RepairShop.Controllers
             var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
             if (employee == null || !employee.Admin)
                 return HttpNotFound();
-
             return View();
         }
 
@@ -98,15 +98,49 @@ namespace RepairShop.Controllers
             return View(model);
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
             // Only admins should be able to see this.
             var userId = User.Identity.GetUserId();
             var employee = employeeDb.GetAll().FirstOrDefault(e => e.UserId == userId);
             if (employee == null || !employee.Admin)
                 return HttpNotFound();
+            
+            
+            var Employee = employeeDb.Get(id);
+            var EmployeeUser = UserManager.FindById(Employee.UserId);
+            var model = new EditEmployeeViewModel
+                {
+                Email = EmployeeUser.Email,
+                Phone = EmployeeUser.PhoneNumber,
+                Admin = Employee.Admin,
+                HourlyCost = Employee.HourlyCost,
+                Id = Employee.Id,
+                Name = EmployeeUser.UserName
+                };
 
-            return View();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditEmployeeViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var E = employeeDb.Get(model.Id);
+                E.Admin = model.Admin;
+                E.HourlyCost = model.HourlyCost;
+                employeeDb.Update(E);
+                var User = UserManager.FindById(E.UserId);
+                User.PhoneNumber = model.Phone;
+                User.Email = model.Email;
+                User.UserName = model.Name;
+                UserManager.Update(User);
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
     }
 }

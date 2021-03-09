@@ -155,7 +155,7 @@ namespace RepairShop.Controllers
             var viewModel = new AdminHomeDetailsViewModel()
             {
                 RepairJob = job,
-                Customer = customerDb.Get(job.CustomerId),
+                Customer = UserManager.FindById(customerDb.Get(job.CustomerId).UserId),
                 Price = jobsDb.GetPrice(id)
             };
             return View(viewModel);

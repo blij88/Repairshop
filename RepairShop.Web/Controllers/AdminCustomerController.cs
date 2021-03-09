@@ -138,7 +138,7 @@ namespace RepairShop.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PhoneNumber = model.Phone};
-                var result = await UserManager.CreateAsync(user, "Welkom1!");
+                var result = await UserManager.CreateAsync(user, "1234Aa=");
                 if (result.Succeeded)
                 {
                     customerDb.Add(new Customer { UserId = user.Id, });
@@ -149,6 +149,38 @@ namespace RepairShop.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult edit(int id)
+        {
+            var c = customerDb.Get(id);
+            var u = UserManager.FindById(c.UserId);
+            var model = new EditCustomerViewModel
+            {
+                Id = c.Id,
+                Email = u.Email,
+                UserName = u.UserName,
+                Phone = u.PhoneNumber
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult edit(EditCustomerViewModel Model)
+        {
+            if (ModelState.IsValid)
+            {
+                var C = customerDb.Get(Model.Id);
+                var User = UserManager.FindById(C.UserId);
+                User.Email = Model.Email;
+                User.UserName = Model.UserName;
+                User.PhoneNumber = Model.Phone;
+                UserManager.Update(User);
+                return RedirectToAction("Index");
+            }
+
+            return View(Model);
         }
     }
 }

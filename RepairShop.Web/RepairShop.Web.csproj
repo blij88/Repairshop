@@ -298,6 +298,7 @@
     <Content Include="Views\AdminPart\Create.cshtml" />
     <Content Include="Views\AdminPart\Edit.cshtml" />
     <Content Include="Views\AdminCustomer\Register.cshtml" />
+    <Content Include="Views\AdminCustomer\edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
